@@ -260,12 +260,87 @@ public class MyBatisTestor {
         try {
             session = MyBatisUtils.openSession();
             Map<String, Integer> param = new HashMap<>();
-            param.put("categoryId", 2);
-            // param.put("currentPrice", 5000);
+            // param.put("categoryId", 2);
+            param.put("currentPrice", 5000);
             List<Goods> list = session.selectList("goods.dynamicSQL", param);
             for (Goods g:list) {
                 System.out.println(g.getTitle()+" : " + g.getCurrentPrice());
             }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * MyBatis二级缓存
+     *      一级缓存默认开启，缓存范围SqlSession会话；
+     *      二级缓存手动开启，属于范围Mapper Namespace；
+     *
+     * 二级缓存运行规则：
+     *      二级缓存开启后默认所有查询操作均使用缓存；
+     *      写操作commit提交时对该namespace缓存强制清空；
+     *      配置useCache=false可以不用缓存；
+     *      配置flushCache=true代表强制清空缓存；
+     */
+    /**
+     * 一级缓存测试
+     * @throws Exception
+     */
+    @Test
+    public void testLv1Cache() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            Goods good = session.selectOne("goods.selectById", 3400);
+            Goods good1 = session.selectOne("goods.selectById", 3400);
+            System.out.println(good.hashCode() + " : " + good1.hashCode());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+
+        System.out.println("--------------------------------");
+
+        try {
+            session = MyBatisUtils.openSession();
+            Goods good = session.selectOne("goods.selectById", 3400);
+            session.commit(); // commit提交时对该namespace缓存强制清空
+            Goods good1 = session.selectOne("goods.selectById", 3400);
+            System.out.println(good.hashCode() + " : " + good1.hashCode());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 二级缓存缓存测试
+     * @throws Exception
+     */
+    @Test
+    public void testLv2Cache() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            Goods good = session.selectOne("goods.selectById", 3400);
+            System.out.println(good.hashCode());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+
+        System.out.println("--------------------------------");
+
+        try {
+            session = MyBatisUtils.openSession();
+            Goods good = session.selectOne("goods.selectById", 3400);
+            session.commit(); // commit提交时对该namespace缓存强制清空
+            System.out.println(good.hashCode());
         } catch (Exception e) {
             throw e;
         } finally {
