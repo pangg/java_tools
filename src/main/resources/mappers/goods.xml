@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+    <select id="selectAll" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods order by goods_id desc limit 10
+    </select>
+
+    <select id="selectById" parameterType="Integer" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where goods_id = #{value}
+    </select>
+
+    <select id="selectByPriceRange" parameterType="java.util.Map" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods
+        where
+        current_price between #{min} and #{max}
+        order by current_price
+        limit 0, #{limt}
+    </select>
+
+    <!-- 获取连表查询结果 -->
+    <select id="selectGoodsMap" resultType="java.util.LinkedHashMap">
+        select g.*, c.category_name, '1' as test
+        from t_goods g, category_ as c
+        where g.category_id = c.id
+    </select>
+
+    <!--DTO数据映射-->
+    <resultMap id="rmGoods" type="com.xxx.mybatis.dto.GoodsDTO">
+        <!-- 设置主键字段和属性映射 -->
+        <id property="goods.id" column="id"></id>
+        <!--设置非主键和字段映射-->
+        <result property="goods.goodsId" column="goods_id"></result>
+        <result property="goods.title" column="title" ></result>
+        <result property="goods.subTitle" column="sub_title" ></result>
+        <result property="goods.originalCost" column="original_cost" ></result>
+        <result property="goods.currentPrice" column="current_price" ></result>
+        <result property="goods.discount" column="discount" ></result>
+        <result property="goods.isFreeDelivery" column="is_free_delivery" ></result>
+        <result property="goods.categoryId" column="category_id" ></result>
+        <result property="category.categoryId" column="category_id" ></result>
+        <result property="category.categoryName" column="category_name" ></result>
+        <result property="category.parentId" column="parent_id" ></result>
+        <result property="category.categoryLevel" column="category_level" ></result>
+        <result property="category.categoryOrder" column="category_order" ></result>
+        <result property="test" column="test" ></result>
+    </resultMap>
+    <select id="selectGoodsDTO" resultMap="rmGoods">
+        select g.*, c.*, '1' as test
+        from t_goods g, t_category as c
+        where g.category_id = c.category_id
+    </select>
+
+    <!--插入数据 selectKey-->
+    <insert id="insetNew" parameterType="com.xxx.mybatis.entity.Goods">
+        insert into t_goods (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values (#{goodsId}, #{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
+        /*执行完上面的sql后，获取主键值：resultType-返回类型，keyProperty-映射到对应的属性字段，order-执行顺序*/
+        <selectKey resultType="Integer" keyProperty="id" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <!--插入数据 useGeneratedKeys ：keyProperty-对应的对象属性字段，keyColumn-对应数据库字段 -->
+    <insert id="insetNewTwo"
+            parameterType="com.xxx.mybatis.entity.Goods"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id"
+    >
+        insert into t_goods (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values (#{goodsId}, #{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
+
+    </insert>
+    <!--
+    selectKey和useGeneratedKeys区别：
+        1. selectKey标签需要明确编写获取最新主键sql语句，适用于所有关系型数据库，是通用方案；
+        2. useGeneratedKeys属性会自动根据驱动生成对应的sql语句，只支持"自增主键"类型的数据库；
+
+        在oracle中selectKey的用法：
+        <insert id="insert" parameterType="com.xxx.mybatis.entity.Goods">
+        insert into sql语句
+        <selectKey resultType="Integer" order="BEFORE" keyProperty="goodsId">
+            select seq_goods.nextval as id from dual
+        </selectKey>
+    </insert>
+    -->
+
+    <!--更新数据-->
+    <update id="update" parameterType="com.xxx.mybatis.entity.Goods">
+        UPDATE t_goods
+        SET
+            title = #{title},
+            sub_title = #{subTitle},
+            original_cost = #{originalCost},
+            current_price = #{currentPrice},
+            discount = #{discount},
+            is_free_delivery = #{isFreeDelivery},
+            category_id = #{categoryId}
+        WHERE
+            goods_id = #{goodsId}
+    </update>
+
+    <!--删除数据-->
+    <delete id="delete" parameterType="Integer">
+        delete from t_goods where id = #{value}
+    </delete>
+
+    <!--
+    SQL注入问题：
+        1、MyBatis两种传值方式：
+            ${}文本替换，未经任何处理对SQL文本替换；#{}预编译传值，使用预编译传值可以预防SQL注入
+
+    -->
+    <!--测试SQL注入-->
+    <select id="selectByTitle" parameterType="java.util.Map" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where title = ${title}
+    </select>
+</mapper>
