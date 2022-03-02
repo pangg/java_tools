@@ -40,6 +40,7 @@
         <mapper resource="mappers/goods.xml" />
         <mapper resource="mappers/goods_detail.xml" />
         <mapper resource="mappers/order.xml" />
+        <mapper resource="mappers/order_item.xml" />
     </mappers>
 
 </configuration>

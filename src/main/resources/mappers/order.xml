@@ -31,7 +31,7 @@
     </select>
 
     <select id="getOrder" resultMap="orderBean">
-        select o.*, g.*, oi.*
+        select o.*, g.*, oi.*, o.id as order_id, oi.id as oiid
         from t_order o
                  left join t_order_item oi on o.id =oi.oid
                  left join t_goods g on g.goods_id = oi.goods_id

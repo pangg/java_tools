@@ -414,4 +414,51 @@ public class MyBatisTestor {
             MyBatisUtils.closeSession(session);
         }
     }
+
+    /**
+     * 插入订单信息
+     * @throws Exception
+     */
+    @Test
+    public void addOrderItem() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            Order order1 = session.selectOne("order.getOrder", 1);
+            Goods goods1 = session.selectOne("goods.selectById", 1006);
+            OrderItem oi = new OrderItem();
+            oi.setGoods(goods1);
+            oi.setOrder(order1);
+            oi.setNumber(3);
+            session.insert("orderItems.addOrderItem", oi);
+            session.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 删除订单信息
+     * @throws Exception
+     */
+    @Test
+    public void testDeleteOrderItem() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            Order o1 = session.selectOne("order.getOrder",1);
+            Goods g1 = session.selectOne("goods.selectById", 1006);
+            OrderItem oi = new OrderItem();
+            oi.setOrder(o1);
+            oi.setGoods(g1);
+            session.delete("orderItems.deleteOrderItem", oi);
+            session.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
 }
