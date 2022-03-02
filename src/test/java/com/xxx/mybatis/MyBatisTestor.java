@@ -3,6 +3,7 @@ package com.xxx.mybatis;
 
 import com.xxx.mybatis.dto.GoodsDTO;
 import com.xxx.mybatis.entity.Goods;
+import com.xxx.mybatis.entity.GoodsDetail;
 import com.xxx.mybatis.utils.MyBatisUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -360,6 +361,26 @@ public class MyBatisTestor {
             List<Goods> list = session.selectList("goods.selectOneToMany");
             for (Goods g:list) {
                 System.out.println(g.getTitle() + " : " + g.getGoodsDetails().size());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * ManyToOne 多对一查询
+     * @throws Exception
+     */
+    @Test
+    public void testManyToOne() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            List<GoodsDetail> list = session.selectList("goodsDetail.selectManyToOne");
+            for (GoodsDetail goodsDetail : list) {
+                System.out.println(goodsDetail.getGdPicUrl() + " ：" + goodsDetail.getGoods().getTitle());
             }
         } catch (Exception e) {
             throw e;

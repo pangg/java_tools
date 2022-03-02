@@ -12,7 +12,7 @@ public class Goods {
     private Float discount; // 折扣率
     private Integer isFreeDelivery; // 是否包邮， 1-包邮，0-不包邮
     private Integer categoryId;  // 分类编号
-    private List<GoodsDetail> goodsDetails;
+    private List<GoodsDetail> goodsDetails; // 一个商品对应多个详情信息
 
     public List<GoodsDetail> getGoodsDetails() {
         return goodsDetails;
