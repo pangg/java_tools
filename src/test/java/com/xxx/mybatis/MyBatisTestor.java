@@ -4,6 +4,8 @@ package com.xxx.mybatis;
 import com.xxx.mybatis.dto.GoodsDTO;
 import com.xxx.mybatis.entity.Goods;
 import com.xxx.mybatis.entity.GoodsDetail;
+import com.xxx.mybatis.entity.Order;
+import com.xxx.mybatis.entity.OrderItem;
 import com.xxx.mybatis.utils.MyBatisUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -381,6 +383,30 @@ public class MyBatisTestor {
             List<GoodsDetail> list = session.selectList("goodsDetail.selectManyToOne");
             for (GoodsDetail goodsDetail : list) {
                 System.out.println(goodsDetail.getGdPicUrl() + " ：" + goodsDetail.getGoods().getTitle());
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * ManyToMany 多对多查询
+     * @throws Exception
+     */
+    @Test
+    public void testListOrder() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            List<Order> os = session.selectList("order.listOrder");
+            for (Order o : os) {
+                System.out.println(o.getCode());
+                List<OrderItem> ois = o.getOrderItems();
+                for (OrderItem oi:ois) {
+                    System.out.format("\t%s\t%f\t%d\n", oi.getGoods().getTitle(), oi.getGoods().getCurrentPrice(), oi.getNumber());
+                }
             }
         } catch (Exception e) {
             throw e;

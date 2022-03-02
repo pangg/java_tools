@@ -174,4 +174,6 @@
     <select id="selectOneToMany" resultMap="rmGoods1">
         select * from t_goods limit 0,1
     </select>
+
+
 </mapper>
