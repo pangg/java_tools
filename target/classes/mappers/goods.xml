@@ -180,4 +180,21 @@
         select * from t_goods where current_price &lt; 5000
     </select>
 
+    <!--批量插入数据-->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into t_goods
+        (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.goodsId},#{item.title},#{item.subTitle},#{item.originalCost},#{item.currentPrice},#{item.discount},#{item.isFreeDelivery},#{item.categoryId})
+        </foreach>
+    </insert>
+
+    <!--批量删除操作-->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from t_goods where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

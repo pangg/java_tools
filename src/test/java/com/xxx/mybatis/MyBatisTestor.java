@@ -17,9 +17,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyBatisTestor {
 
@@ -485,6 +483,68 @@ public class MyBatisTestor {
             for (Goods g : data) {
                 System.out.println(g.getTitle());
             }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 批量插入数据
+     * @throws Exception
+     */
+    @Test
+    public void testBatchInsert() throws Exception {
+        SqlSession session = null;
+        try {
+            long st = new Date().getTime();
+            session = MyBatisUtils.openSession();
+            List<Goods> list = new ArrayList<>();
+            for (int i=0; i < 1000; i++) {
+                Goods goods = new Goods();
+                goods.setGoodsId(i+5000);
+                goods.setTitle("测试商品" + i);
+                goods.setSubTitle("测试子标题");
+                goods.setOriginalCost(200f);
+                goods.setCurrentPrice(160f);
+                goods.setIsFreeDelivery(1);
+                goods.setCategoryId(3);
+                goods.setDiscount(8.5f);
+                list.add(goods);
+            }
+            int num = session.insert("goods.batchInsert", list);
+            session.commit();
+            long et = new Date().getTime();
+            System.out.println("执行时间：" + (et - st) + "毫秒");
+            System.out.println(num);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 批量删除操作
+     * @throws Exception
+     */
+    @Test
+    public void testBatchDelete() throws Exception {
+        SqlSession session = null;
+        try {
+            long st = new Date().getTime();
+            session = MyBatisUtils.openSession();
+            List<Integer> list = new ArrayList<>();
+            list.add(1008);
+            list.add(1007);
+            list.add(1006);
+            list.add(1005);
+            int num = session.delete("goods.batchDelete", list);
+            session.commit();
+            long et = new Date().getTime();
+            System.out.println("执行时间" + (et - st) + "毫秒");
+            System.out.println(num);
         } catch (Exception e) {
             throw e;
         } finally {
