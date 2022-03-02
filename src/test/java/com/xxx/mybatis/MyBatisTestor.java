@@ -3,6 +3,7 @@ package com.xxx.mybatis;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xxx.mybatis.dao.GoodsDAO;
 import com.xxx.mybatis.dto.GoodsDTO;
 import com.xxx.mybatis.entity.Goods;
 import com.xxx.mybatis.entity.GoodsDetail;
@@ -545,6 +546,88 @@ public class MyBatisTestor {
             long et = new Date().getTime();
             System.out.println("执行时间" + (et - st) + "毫秒");
             System.out.println(num);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * MyBatis常用注解
+     * 注解         对象XML    说明
+     * @Insert    <insert>    新增SQL
+     * @Update    <update>    更新sql
+     * @Delete    <delete>    删除SQL
+     * @Select    <select>    查询SQL
+     * @Param     --          参数映射
+     * @Results   <resultMap>  结果映射
+     * @Result    <id><result>  字段映射
+     */
+    /**
+     * 通过注解查询
+     * @throws Exception
+     */
+    @Test
+    public void testSelectByPriceRange2() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            GoodsDAO goodsDAO = session.getMapper(GoodsDAO.class);
+            List<Goods> list = goodsDAO.selectByPriceRange(150f, 2000f, 20);
+            System.out.println(list.size());
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 通过注解插入数据
+     * @throws Exception
+     */
+    @Test
+    public void testInsert2() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            Goods goods = new Goods();
+            goods.setGoodsId(1007);
+            goods.setTitle("洗衣机2");
+            goods.setSubTitle("西门子2");
+            goods.setOriginalCost(5000f);
+            goods.setCurrentPrice(4599f);
+            goods.setDiscount(8.5f);
+            goods.setCategoryId(3);
+            goods.setIsFreeDelivery(1);
+            GoodsDAO goodsDAO = session.getMapper(GoodsDAO.class);
+            int num = goodsDAO.insert(goods);
+            System.out.println(num);
+            session.commit(); // 提交事物
+            System.out.println(goods.getId());
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 通过注解实现数据传输对象的数据映射
+     * @throws Exception
+     */
+    @Test
+    public void testSelectAll2() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            GoodsDAO goodsDAO = session.getMapper(GoodsDAO.class);
+            List<GoodsDTO> list = goodsDAO.selectAll();
+            System.out.println(list.size());
         } catch (Exception e) {
             throw e;
         } finally {

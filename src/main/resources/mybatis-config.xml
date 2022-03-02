@@ -58,12 +58,20 @@
         </environment>
     </environments>
 
-
-    <mappers>
+    <!--注解开发，注释XML文件-->
+    <!--<mappers>
         <mapper resource="mappers/goods.xml" />
         <mapper resource="mappers/goods_detail.xml" />
         <mapper resource="mappers/order.xml" />
         <mapper resource="mappers/order_item.xml" />
+    </mappers>-->
+    
+    <!--使用注解开发-->
+    <mappers>
+        <!--如果项目后期接口太多，class引入则太多-->
+        <!--<mapper class="com.xxx.mybatis.dao.GoodsDAO" />-->
+        
+        <package name="com.xxx.mybatis.dao"/>
     </mappers>
 
 </configuration>
