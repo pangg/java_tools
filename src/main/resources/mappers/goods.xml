@@ -175,5 +175,9 @@
         select * from t_goods limit 0,1
     </select>
 
+    <!--分页查询-->
+    <select id="selectPage" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where current_price &lt; 5000
+    </select>
 
 </mapper>

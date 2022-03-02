@@ -10,6 +10,18 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
+
+    <!-- 启用PageHelper分页插件 -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 设置数据库类型 -->
+            <property name="helperDialect" value="mysql"/>
+            <!-- 分页合理化参数 -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+
     <environments default="dev">
         <environment id="dev">
             <!-- 采用JDBC方式对数据库事物进行commit/rollback -->

@@ -1,6 +1,8 @@
 package com.xxx.mybatis;
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xxx.mybatis.dto.GoodsDTO;
 import com.xxx.mybatis.entity.Goods;
 import com.xxx.mybatis.entity.GoodsDetail;
@@ -455,6 +457,34 @@ public class MyBatisTestor {
             oi.setGoods(g1);
             session.delete("orderItems.deleteOrderItem", oi);
             session.commit();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            MyBatisUtils.closeSession(session);
+        }
+    }
+
+    /**
+     * 分页演示
+     * @throws Exception
+     */
+    @Test
+    public void testPageHelper() throws Exception {
+        SqlSession session = null;
+        try {
+            session = MyBatisUtils.openSession();
+            PageHelper.startPage(2, 3);
+            Page<Goods> page = (Page) session.selectList("goods.selectPage");
+            System.out.println("总数：" + page.getPages());
+            System.out.println("总记录数：" + page.getTotal());
+            System.out.println("开始行号：" + page.getStartRow());
+            System.out.println("结束行号：" + page.getEndRow());
+            System.out.println("当前页码：" + page.getPageNum());
+
+            List<Goods> data = page.getResult(); // 当前页数据
+            for (Goods g : data) {
+                System.out.println(g.getTitle());
+            }
         } catch (Exception e) {
             throw e;
         } finally {
