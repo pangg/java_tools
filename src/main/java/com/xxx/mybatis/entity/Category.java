@@ -1,11 +1,22 @@
 package com.xxx.mybatis.entity;
 
+import java.util.List;
+
 public class Category {
     private Integer categoryId;
     private String categoryName;
     private Integer parentId;
     private Integer categoryLevel;
     private Integer categoryOrder;
+    private List<Goods> goods;
+
+    public List<Goods> getGoods() {
+        return goods;
+    }
+
+    public void setGoods(List<Goods> goods) {
+        this.goods = goods;
+    }
 
     public Integer getCategoryId() {
         return categoryId;

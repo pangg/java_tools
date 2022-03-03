@@ -25,4 +25,19 @@ public interface GoodsDAO {
             @Result(column = "title", property = "goods.title")
     })
     public List<GoodsDTO> selectAll();
+
+    @Select("select * from t_goods where category_id = #{cid}")
+    public List<Goods> listByCategoryId(int cid);
+
+    /**
+     * 多对一关系查询
+     */
+    @Select("select * from t_goods")
+    @Results({
+            @Result(property = "category", column = "category_id", one = @One(select = "com.xxx.mybatis.dao.CategoryDAO.get"))
+    })
+    public List<Goods> list();
+
+    @Select("select * from t_goods where goods_id = #{id}")
+    public Goods getSingleGoods(int id);
 }
