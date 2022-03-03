@@ -1,6 +1,7 @@
 package com.xxx.mybatis;
 
 import com.xxx.mybatis.dao.CategoryDAO;
+import com.xxx.mybatis.dao.CategoryProviderMapper;
 import com.xxx.mybatis.dao.GoodsDAO;
 import com.xxx.mybatis.dao.OrderDAO;
 import com.xxx.mybatis.entity.Category;
@@ -122,5 +123,52 @@ public class MyBatisAnnotationTestor {
                 }
             }
         }
+    }
+
+    @Test
+    public void testAddCategory() {
+        CategoryProviderMapper c = session.getMapper(CategoryProviderMapper.class);
+        Category category = new Category();
+        category.setCategoryName("category-tt");
+        category.setParentId(0);
+        category.setCategoryLevel(3);
+        category.setCategoryOrder(3);
+        int num = c.add(category);
+        session.commit();
+        System.out.println(num);
+    }
+
+    @Test
+    public void testUpdateCategory2() {
+        CategoryProviderMapper categoryProviderMapper = session.getMapper(CategoryProviderMapper.class);
+        Category category = categoryProviderMapper.get(7);
+        category.setCategoryName("测试类目ttt");
+        int num = categoryProviderMapper.update(category);
+        session.commit();
+        System.out.println(num);
+    }
+
+    @Test
+    public void testGetCategory2() {
+        CategoryProviderMapper c = session.getMapper(CategoryProviderMapper.class);
+        Category category = c.get(7);
+        System.out.println(category.getCategoryName());
+    }
+
+    @Test
+    public void testListAllCategory2() {
+        CategoryProviderMapper c = session.getMapper(CategoryProviderMapper.class);
+        List<Category> list = c.list();
+        for (Category category : list) {
+            System.out.println(category.getCategoryName());
+        }
+    }
+
+    @Test
+    public void testDeleteCategory2() {
+        CategoryProviderMapper c = session.getMapper(CategoryProviderMapper.class);
+        int num = c.delete(7);
+        session.commit();
+        System.out.println(num);
     }
 }
