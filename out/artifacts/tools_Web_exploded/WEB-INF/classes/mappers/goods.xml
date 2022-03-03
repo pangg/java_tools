@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+
+    <!-- TODO 开启二级缓存 -->
+    <!--
+    eviction是缓存的清除策略，当缓存对象数量到达上限后，自动触发对应的算法对缓存对象清空
+        1、LRU - 最近最久未使用，移除最长时间不被使用的对象；
+        2、FIFO - 先进先出：按对象进入缓存的顺序来移除他们；
+        3、SOFT - 软引用：移除基于垃圾收集器状态和软引用规则的对象；
+        4、WEAK - 弱引用：更积极的移除基于垃圾收集器状态和弱引用规则的对象；
+
+     flushInterval代表间隔多长时间来自动清除缓存，单位毫秒，600000毫秒 = 10分钟；
+     size 缓存存储上限，用于保存对象或集合（1个集合算一个对象）的数量上限；
+     readOnly：
+        1、设置true，代表返回只读缓存，每次从缓存取出的是缓存对象本身，这种执行效率较高；
+        2、false，代表每次取出的是缓存对象的副本，每一次取出的对象都是不同的，这种安全性较高；
+
+     useCache="false"代表不使用缓存；
+     flushCache="true"在SQL执行后强制清空缓存；
+    -->
+    <cache eviction="LRU" flushInterval="600000" size="512" readOnly="true"></cache>
+
+    <!--TODO: useCache="false"代表不使用缓存，列表一般不放入缓存 -->
+    <select id="selectAll" resultType="com.xxx.mybatis.entity.Goods" useCache="false">
+        select * from t_goods order by goods_id desc limit 10
+    </select>
+
+    <select id="selectById" parameterType="Integer" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where goods_id = #{value}
+    </select>
+
+    <select id="selectByPriceRange" parameterType="java.util.Map" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods
+        where
+        current_price between #{min} and #{max}
+        order by current_price
+        limit 0, #{limt}
+    </select>
+
+    <!-- 获取连表查询结果 -->
+    <select id="selectGoodsMap" resultType="java.util.LinkedHashMap">
+        select g.*, c.category_name, '1' as test
+        from t_goods g, category_ as c
+        where g.category_id = c.id
+    </select>
+
+    <!--DTO数据映射-->
+    <resultMap id="rmGoods" type="com.xxx.mybatis.dto.GoodsDTO">
+        <!-- 设置主键字段和属性映射 -->
+        <id property="goods.id" column="id"></id>
+        <!--设置非主键和字段映射-->
+        <result property="goods.goodsId" column="goods_id"></result>
+        <result property="goods.title" column="title" ></result>
+        <result property="goods.subTitle" column="sub_title" ></result>
+        <result property="goods.originalCost" column="original_cost" ></result>
+        <result property="goods.currentPrice" column="current_price" ></result>
+        <result property="goods.discount" column="discount" ></result>
+        <result property="goods.isFreeDelivery" column="is_free_delivery" ></result>
+        <result property="goods.categoryId" column="category_id" ></result>
+        <result property="category.categoryId" column="category_id" ></result>
+        <result property="category.categoryName" column="category_name" ></result>
+        <result property="category.parentId" column="parent_id" ></result>
+        <result property="category.categoryLevel" column="category_level" ></result>
+        <result property="category.categoryOrder" column="category_order" ></result>
+        <result property="test" column="test" ></result>
+    </resultMap>
+    <select id="selectGoodsDTO" resultMap="rmGoods">
+        select g.*, c.*, '1' as test
+        from t_goods g, t_category as c
+        where g.category_id = c.category_id
+    </select>
+
+    <!--插入数据 selectKey-->
+    <!-- TODO: flushCache="true"在SQL执行后强制清空缓存 -->
+    <insert id="insetNew" parameterType="com.xxx.mybatis.entity.Goods" flushCache="true">
+        insert into t_goods (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values (#{goodsId}, #{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
+        /*执行完上面的sql后，获取主键值：resultType-返回类型，keyProperty-映射到对应的属性字段，order-执行顺序*/
+        <selectKey resultType="Integer" keyProperty="id" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <!--插入数据 useGeneratedKeys ：keyProperty-对应的对象属性字段，keyColumn-对应数据库字段 -->
+    <insert id="insetNewTwo"
+            parameterType="com.xxx.mybatis.entity.Goods"
+            useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id"
+    >
+        insert into t_goods (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values (#{goodsId}, #{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
+
+    </insert>
+    <!--
+    selectKey和useGeneratedKeys区别：
+        1. selectKey标签需要明确编写获取最新主键sql语句，适用于所有关系型数据库，是通用方案；
+        2. useGeneratedKeys属性会自动根据驱动生成对应的sql语句，只支持"自增主键"类型的数据库；
+
+        在oracle中selectKey的用法：
+        <insert id="insert" parameterType="com.xxx.mybatis.entity.Goods">
+        insert into sql语句
+        <selectKey resultType="Integer" order="BEFORE" keyProperty="goodsId">
+            select seq_goods.nextval as id from dual
+        </selectKey>
+    </insert>
+    -->
+
+    <!--更新数据-->
+    <update id="update" parameterType="com.xxx.mybatis.entity.Goods">
+        UPDATE t_goods
+        SET
+            title = #{title},
+            sub_title = #{subTitle},
+            original_cost = #{originalCost},
+            current_price = #{currentPrice},
+            discount = #{discount},
+            is_free_delivery = #{isFreeDelivery},
+            category_id = #{categoryId}
+        WHERE
+            goods_id = #{goodsId}
+    </update>
+
+    <!--删除数据-->
+    <delete id="delete" parameterType="Integer">
+        delete from t_goods where id = #{value}
+    </delete>
+
+    <!--
+    SQL注入问题：
+        1、MyBatis两种传值方式：
+            ${}文本替换，未经任何处理对SQL文本替换；#{}预编译传值，使用预编译传值可以预防SQL注入
+
+    -->
+    <!--测试SQL注入-->
+    <select id="selectByTitle" parameterType="java.util.Map" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where title = ${title}
+    </select>
+
+    <!--动态SQL查询-->
+    <select id="dynamicSQL" parameterType="java.util.Map" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods
+        <where>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="currentPrice != null">
+                and current_price &lt; #{currentPrice}
+            </if>
+        </where>
+    </select>
+
+    <!--oneToMany一对多查询-->
+    <!--
+        resultMap可用于说明一对多或者多对一的映射逻辑
+        id是resultMap属性引用的标志
+        type指向One的实体（Goods）
+    -->
+    <resultMap id="rmGoods1" type="com.xxx.mybatis.entity.Goods">
+        <!--映射goods对象的主键到goods_id字段-->
+        <id column="goods_id" property="goodsId"></id>
+        <!--
+            collection的含义是，在
+            select * from t_goods_limit 0,1 得到结果后，对所有的Goods对象遍历得到goods_id字段值，
+            并代入到goodsDetail命名空间的findByGoodsId的SQL中执行查询，
+            将得到的"商品详情"集合赋值给goodsDetails List对象
+        -->
+        <collection property="goodsDetails" select="goodsDetail.selectByGoodsId" column="goods_id" />
+    </resultMap>
+    <select id="selectOneToMany" resultMap="rmGoods1">
+        select * from t_goods limit 0,1
+    </select>
+
+    <!--分页查询-->
+    <select id="selectPage" resultType="com.xxx.mybatis.entity.Goods">
+        select * from t_goods where current_price &lt; 5000
+    </select>
+
+    <!--批量插入数据-->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into t_goods
+        (goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.goodsId},#{item.title},#{item.subTitle},#{item.originalCost},#{item.currentPrice},#{item.discount},#{item.isFreeDelivery},#{item.categoryId})
+        </foreach>
+    </insert>
+
+    <!--批量删除操作-->
+    <delete id="batchDelete" parameterType="java.util.List">
+        delete from t_goods where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

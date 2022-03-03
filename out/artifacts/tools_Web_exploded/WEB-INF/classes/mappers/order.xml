@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="order">
+    <!--
+    查询结果 id和code字段放在Order对象里，
+    然后通过一对多的<collection>标签把oiid和number放在OrderItem对象里，
+    最后把goods_id,title,current_price放进Goods对象里。
+    -->
+    <resultMap id="orderBean" type="com.xxx.mybatis.entity.Order">
+        <id column="order_id" property="id" />
+        <result column="code" property="code" />
+
+        <collection property="orderItems" ofType="com.xxx.mybatis.entity.OrderItem">
+            <id column="oiid" property="id" />
+            <result column="number" property="number" />
+            <association property="goods" javaType="com.xxx.mybatis.entity.Goods">
+                <id column="goods_id" property="goodsId" />
+                <result column="title" property="title" />
+                <result column="current_price" property="currentPrice" />
+            </association>
+        </collection>
+    </resultMap>
+    <select id="listOrder" resultMap="orderBean">
+        select o.*, g.*, oi.*, o.id as order_id, oi.id as oiid
+        from t_order o
+                 left join t_order_item oi    on o.id =oi.oid
+                 left join t_goods g on g.goods_id = oi.goods_id
+    </select>
+
+    <select id="getOrder" resultMap="orderBean">
+        select o.*, g.*, oi.*, o.id as order_id, oi.id as oiid
+        from t_order o
+                 left join t_order_item oi on o.id =oi.oid
+                 left join t_goods g on g.goods_id = oi.goods_id
+        where o.id = #{id}
+    </select>
+</mapper>

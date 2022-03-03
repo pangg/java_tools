@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderItems">
+    <insert id="addOrderItem" parameterType="com.xxx.mybatis.entity.OrderItem">
+        insert into t_order_item
+        (oid, goods_id, number)
+        values (#{order.id}, #{goods.goodsId}, #{number})
+    </insert>
+
+    <insert id="deleteOrderItem" parameterType="com.xxx.mybatis.entity.OrderItem">
+        delete from t_order_item
+            where oid = #{order.id} and goods_id = #{goods.goodsId}
+    </insert>
+</mapper>

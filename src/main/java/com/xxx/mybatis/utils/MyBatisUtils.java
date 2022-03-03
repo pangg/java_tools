@@ -32,7 +32,9 @@ public class MyBatisUtils {
      * @return
      */
     public static SqlSession openSession() {
-        return sqlSessionFactory.openSession();
+        // 默认SqlSession对自动提交事务数据（commit）
+        // 设置false代表关闭自动提交，改为手动提交事务数据
+        return sqlSessionFactory.openSession(false);
     }
 
     /**

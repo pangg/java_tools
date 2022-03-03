@@ -26,16 +26,16 @@
         <environment id="dev">
             <!-- 采用JDBC方式对数据库事物进行commit/rollback -->
             <transactionManager type="JDBC"></transactionManager>
-            <!-- 采用连接池方式管理数据库连接 -->
-            <!--<dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"/>
+            <!-- 采用MyBatis自带的连接池方式管理数据库连接 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/oa?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowPublicKeyRetrieval=true"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
-            </dataSource>-->
+            </dataSource>
 
             <!-- 使用c3p0连接池 -->
-            <dataSource type="com.xxx.mybatis.datasource.C3P0DataSourceFactory">
+            <!--<dataSource type="com.xxx.mybatis.datasource.C3P0DataSourceFactory">
                 <property name="driverClass" value="com.mysql.jdbc.Driver"/>
                 <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"/>
                 <property name="user" value="root"/>
@@ -43,7 +43,7 @@
                 <property name="initialPoolSize" value="5"/>
                 <property name="maxPoolSize" value="20"/>
                 <property name="minPoolSize" value="5"/>
-            </dataSource>
+            </dataSource>-->
         </environment>
 
         <!--支持多环境配置-->
@@ -70,8 +70,12 @@
     <mappers>
         <!--如果项目后期接口太多，class引入则太多-->
         <!--<mapper class="com.xxx.mybatis.dao.GoodsDAO" />-->
-        
-        <package name="com.xxx.mybatis.dao"/>
+
+        <!--mybatis注解开发test-->
+        <!--<package name="com.xxx.mybatis.dao"/>-->
+
+        <!--OA系统mappers-->
+        <mapper resource="oaMappers/test.xml" />
     </mappers>
 
 </configuration>
