@@ -1,10 +1,9 @@
 package com.xxx.player;
 
-import org.junit.Test;
+
 import java.util.Scanner;
 
 public class TestDemo {
-    @Test
     public void testSong() {
         Song song1 = new Song("s001", "两只老虎", "小太阳");
         Song song2 = new Song("s002", "小燕子", "风车");
@@ -16,7 +15,7 @@ public class TestDemo {
         System.out.println(song4 == song3);
     }
 
-    @Test
+
     public void testPlayList() {
         Song song1 = new Song("s001", "两只老虎", "小太阳");
         Song song2 = new Song("s002", "小燕子", "风车");
@@ -61,7 +60,6 @@ public class TestDemo {
     /**
      * 测试播放列表集合类
      */
-    @Test
     public void testPlayListCollection() {
         Song song1 = new Song("s001", "两只老虎", "小太阳");
         Song song2 = new Song("s002", "小燕子", "风车");

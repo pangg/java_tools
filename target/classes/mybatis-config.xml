@@ -88,6 +88,7 @@
 
         <!--OA系统mappers-->
         <mapper resource="oaMappers/test.xml" />
+        <mapper resource="oaMappers/user.xml" />
     </mappers>
 
 </configuration>
