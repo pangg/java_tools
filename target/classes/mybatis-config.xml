@@ -92,6 +92,9 @@
         <mapper resource="oaMappers/rbac.xml" />
         <mapper resource="oaMappers/employee.xml" />
         <mapper resource="oaMappers/department.xml" />
+        <mapper resource="oaMappers/leave_form.xml" />
+        <mapper resource="oaMappers/process_flow.xml" />
+        <mapper resource="oaMappers/notice.xml" />
     </mappers>
 
 </configuration>

@@ -33,7 +33,7 @@ public class IndexServlet extends HttpServlet {
 
         session.setAttribute("current_employee", employee);
         session.setAttribute("current_department", department);
-        request.getRequestDispatcher("index.ftl").forward(request, response);
+        request.getRequestDispatcher("/index.ftl").forward(request, response);
     }
 
     @Override
