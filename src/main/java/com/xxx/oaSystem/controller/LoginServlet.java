@@ -34,8 +34,12 @@ public class LoginServlet extends HttpServlet {
         Map<String, Object> result = new HashMap<>();
         try {
             User user = userService.checkLogin(username, password);
+            HttpSession httpSession = request.getSession();
+            httpSession.setAttribute("login_user", user);
+
             result.put("code", "0");
             result.put("message", "success");
+            result.put("redirect_url", "/index");
         } catch (BusinessException ex) {
             logger.error(ex.getMessage(), ex);
             result.put("code", ex.getCode());

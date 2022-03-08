@@ -57,7 +57,7 @@
                 if(json.code == "0"){ //登录校验成功
                     layui.layer.msg("登录成功");
                     //跳转url
-                    //window.location.href=json.redirect_url;
+                    window.location.href=json.redirect_url;
                 }else{
                     layui.layer.msg(json.message);
                 }

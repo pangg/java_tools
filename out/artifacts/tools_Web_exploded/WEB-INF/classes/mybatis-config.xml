@@ -89,6 +89,9 @@
         <!--OA系统mappers-->
         <mapper resource="oaMappers/test.xml" />
         <mapper resource="oaMappers/user.xml" />
+        <mapper resource="oaMappers/rbac.xml" />
+        <mapper resource="oaMappers/employee.xml" />
+        <mapper resource="oaMappers/department.xml" />
     </mappers>
 
 </configuration>
