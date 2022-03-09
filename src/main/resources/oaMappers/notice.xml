@@ -10,4 +10,11 @@
                 values
             (#{receiverId}, #{content}, #{createTime});
     </insert>
+
+    <select id="selectByReceiverId" parameterType="Long" resultType="com.xxx.oaSystem.entity.Notice">
+        select *
+        from sys_notice
+        where receiver_id = #{value}
+        order by create_time desc limit 0, 100;
+    </select>
 </mapper>

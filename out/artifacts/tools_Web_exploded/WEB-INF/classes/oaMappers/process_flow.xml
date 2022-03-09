@@ -10,4 +10,25 @@
             values
             (#{formId}, #{operatorId}, #{action}, #{result}, #{reason}, #{createTime}, #{auditTime}, #{orderNo}, #{state}, #{isLast});
     </insert>
+
+    <update id="update" parameterType="com.xxx.oaSystem.entity.ProcessFlow">
+        update adm_process_flow
+        set
+            form_id = #{formId},
+            operator_id = #{operatorId},
+            action = #{action},
+            result = #{result},
+            reason = #{reason},
+            create_time = #{createTime},
+            audit_time = #{auditTime},
+            order_no = #{orderNo},
+            state = #{state},
+            is_last = #{isLast}
+        where process_id = #{processId}
+    </update>
+
+    <select id="selectByFormId" parameterType="Long" resultType="com.xxx.oaSystem.entity.ProcessFlow">
+        select * from adm_process_flow where form_id = #{formId} order by order_no;
+    </select>
+
 </mapper>

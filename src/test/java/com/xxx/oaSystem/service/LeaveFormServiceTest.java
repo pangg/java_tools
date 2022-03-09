@@ -24,7 +24,7 @@ public class LeaveFormServiceTest {
         form.setStartTime(sdf.parse("2020032608"));
         form.setEndTime(sdf.parse("2020040118"));
         form.setFormType(1);
-        form.setReason("市场部员工请假单(72小时以上)");
+        form.setReason("2市场部员工请假单(72小时以上)");
         form.setCreateTime(new Date());
         LeaveForm savedForm = leaveFormService.createLeaveForm(form);
         System.out.println(savedForm.getFormId());
@@ -82,5 +82,37 @@ public class LeaveFormServiceTest {
         form.setCreateTime(new Date());
         LeaveForm savedForm = leaveFormService.createLeaveForm(form);
         System.out.println(savedForm.getFormId());
+    }
+
+    /**
+     * 请假3天以上,部门经理审批通过
+     */
+    @Test
+    public void audit1(){
+        leaveFormService.audit(3L,6L,"approved","祝早日康复");
+    }
+
+    /**
+     * 请假3天以上,总经理审批通过
+     */
+    @Test
+    public void audit4(){
+        leaveFormService.audit(3L,1L,"approved","祝早日康复");
+    }
+
+    /**
+     * 请假3天以上,部门经理审批驳回
+     */
+    @Test
+    public void audit2(){
+        leaveFormService.audit(9L,6L,"refused","工期紧张,请勿拖延");
+    }
+
+    /**
+     * 部门经理请假,总经理审批通过
+     */
+    @Test
+    public void audit3(){
+        leaveFormService.audit(6L,1L,"approved","同意");
     }
 }

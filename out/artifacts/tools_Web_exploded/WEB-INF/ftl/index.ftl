@@ -12,7 +12,7 @@
     <!--头部导航栏-->
     <div class="layui-header">
         <!--系统标题-->
-        <div class="layui-logo" style="font-size:18px">慕课网办公OA系统</div>
+        <div class="layui-logo" style="font-size:18px">办公OA系统</div>
         <!--右侧当前用户信息-->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -55,9 +55,9 @@
         </div>
     </div>
     <!--主体部分采用iframe嵌入其他页面-->
-    <#--<div class="layui-body" style="overflow-y: hidden">
+    <div class="layui-body" style="overflow-y: hidden">
         <iframe name="ifmMain" src="/forward/notice" style="border: 0px;width: 100%;height: 100%"></iframe>
-    </div>-->
+    </div>
     <!--版权信息-->
     <div class="layui-footer">
         Copyright © imooc. All Rights Reserved.
