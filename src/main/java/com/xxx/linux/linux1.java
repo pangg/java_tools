@@ -203,5 +203,78 @@
  *      firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address="oa服务部署机器的ip地址" port protocol="tcp" port="3306" accept "
  *      firewall-cmd --reload
  *
+ *  19。安装redis
+ *      redis下载路径：https://redis.io/download
+ *      wget https://download.redis.io/releases/redis-6.2.6.tar.gz
+ *      tar xzf redis-6.2.6.tar.gz
+ *      cd redis-6.2.6
+ *      make   #编译redis
+ *      ./src/redis-server redis.config   #启动redis服务，并引用配置文件
+ *      ./src/redis-cli   #使用redis客户端
+ *      ./src/redis-cli -p 6379
+ *      ./src/redis-cli shutdown  #关闭redis服务
+ *
+ *  20。redis常用基本配置
+ *      daemonize yes  #是否启用后台运行（守护进程），默认no
+ *      port 6379       #设置端口号，默认6379
+ *      logfile 日志文件   #设置日志文件
+ *      database 255     #设置redis数据库总量
+ *      dir 数据文件目录   #设置数据文件存储目录
+ *      requirepass 12345  #设置使用密码
+ *
+ *      protected-mode no #关闭保护模式，允许其他主机访问redis
+ *      bind 0.0.0.0  #允许所有IP的主机访问 TODO 生产环境禁止这样配置
+ *
+ *      redis 命令：
+ *      select 1 #使用1号数据库
+ *      auth 12345  #使用密码鉴权登陆
+ *      set key value  #设置key值value
+ *      get key   #获取key的值
+ *      keys he*   #根据Pattern表达式查询符合条件的key
+ *      dbsize     #返回key的总数
+ *      exists a   #检查key=a是否存在
+ *      del a      #删除key=a的数据
+ *      expire a 20    #设置key=a的过期时间为20秒
+ *      ttl a      #查看key=a的过期时间
+ *      clear      #清屏
+ *
+ *      String：最大512M，建议单个kv不超过100K
+ *          mset name1 v1 name2 v2
+ *          mget name1 name2
+ *
+ *      Hash：哈希
+ *          hset
+ *          hget
+ *          hgetall
+ *          hmset key name1 v1 name2 v2 name3 v3
+ *          hdel key name1
+ *          hlen
+ *          hexists
+ *
+ *      List:列表
+ *          rpush listKey c b a   #右侧插入cba
+ *          lpush listKey f e d   #左侧插入fed
+ *          rpop listKey   #右侧弹出
+ *          lpop listKey   #左侧弹出
+ *          lrange listKey 0 -1  #取出所有元素
+ *
+ *      Set和Zset：
+ *          set无序，元素唯一
+ *          zset有序，元素唯一
+ *
+ *          sadd key value
+ *          smembers key
+ *          sinter set1 set2   #获取交集
+ *          sunion set1 set2   #并集
+ *          sdiff  set1 set2   #差集
+ *
+ *          zadd key1 100 a
+ *          zadd key1 101 b
+ *          zadd key1 102 c
+ *          zrange key1 0 -1 [withscores]
+ *
+ *
+ *
+ *
  *
  */
