@@ -51,6 +51,14 @@
     </bean>
 
 
+    <!--
+        对象依赖注入：
+            1。依赖注入是指运行时将容器内的对象利用反射赋给其他对象的操作
+            2。基于setter方法注入对象
+            3。基于构造方法注入对象
+    -->
+
+    <!--利用setter实现对象依赖注入-->
     <bean id="lilyObj" class="com.xxx.spring.ioc1.entity.Child">
         <property name="name" value="莉莉" />
         <!--利用ref注入依赖对象-->
