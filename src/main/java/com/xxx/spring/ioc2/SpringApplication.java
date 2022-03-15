@@ -43,5 +43,11 @@ public class SpringApplication {
          */
         Child lily = context.getBean("lilyObj", Child.class);
         lily.eat();
+
+        /**
+         * 基于构造方法注入对象
+         */
+        Child andy = context.getBean("andyObj", Child.class);
+        andy.eat();
     }
 }

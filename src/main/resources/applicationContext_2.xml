@@ -64,4 +64,17 @@
         <!--利用ref注入依赖对象-->
         <property name="apple" ref="apple2" />
     </bean>
+
+    <bean id="sourApple2" class="com.xxx.spring.ioc1.entity.Apple">
+        <constructor-arg name="title" value="青苹果" />
+        <constructor-arg name="color" value="绿色" />
+        <constructor-arg name="origin" value="中亚" />
+        <constructor-arg name="price" value="9.8" />
+    </bean>
+
+    <!--基于构造方法注入对象-->
+    <bean id="andyObj" class="com.xxx.spring.ioc1.entity.Child">
+        <constructor-arg name="name" value="安迪" />
+        <constructor-arg name="apple" ref="sourApple2" />
+    </bean>
 </beans>
