@@ -18,6 +18,7 @@
 
     <!--使用带参构造方法实例化对象-->
     <bean id="apple2" class="com.xxx.spring.ioc1.entity.Apple">
+        <!--IoC容器自动利用反射机制运行时调用setXXX方法为属性赋值-->
         <constructor-arg name="title" value="红富士" />
         <constructor-arg name="color" value="红色" />
         <constructor-arg name="origin" value="欧洲" />
@@ -47,5 +48,20 @@
         <constructor-arg index="0" value="红富士" />
         <constructor-arg index="1" value="红色" />
         <constructor-arg index="2" value="欧洲" />
+    </bean>
+
+
+    <!--
+        对象依赖注入：
+            1。依赖注入是指运行时将容器内的对象利用反射赋给其他对象的操作
+            2。基于setter方法注入对象
+            3。基于构造方法注入对象
+    -->
+
+    <!--利用setter实现对象依赖注入-->
+    <bean id="lilyObj" class="com.xxx.spring.ioc1.entity.Child">
+        <property name="name" value="莉莉" />
+        <!--利用ref注入依赖对象-->
+        <property name="apple" ref="apple2" />
     </bean>
 </beans>

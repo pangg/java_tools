@@ -3,6 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        bean id与name属性相同点：
+            1。bean id与name都是设置对象在IoC容器中唯一标识；
+            2。两者在同一个配置文件中都不允许重复出现；
+            3。两者允许在多个配置文件中出现重复，新对象覆盖旧对象；
+    -->
+
     <!--bean标签默认通过默认构造方法创建对象-->
     <bean id="apple1" class="com.xxx.spring.ioc1.entity.Apple">
 
@@ -10,6 +18,7 @@
 
     <!--使用带参构造方法实例化对象-->
     <bean id="apple2" class="com.xxx.spring.ioc1.entity.Apple">
+        <!--IoC容器自动利用反射机制运行时调用setXXX方法为属性赋值-->
         <constructor-arg name="title" value="红富士" />
         <constructor-arg name="color" value="红色" />
         <constructor-arg name="origin" value="欧洲" />
@@ -39,5 +48,12 @@
         <constructor-arg index="0" value="红富士" />
         <constructor-arg index="1" value="红色" />
         <constructor-arg index="2" value="欧洲" />
+    </bean>
+
+
+    <bean id="lilyObj" class="com.xxx.spring.ioc1.entity.Child">
+        <property name="name" value="莉莉" />
+        <!--利用ref注入依赖对象-->
+        <property name="apple" ref="apple2" />
     </bean>
 </beans>

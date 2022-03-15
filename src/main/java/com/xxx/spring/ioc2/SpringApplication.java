@@ -1,6 +1,7 @@
 package com.xxx.spring.ioc2;
 
 import com.xxx.spring.ioc1.entity.Apple;
+import com.xxx.spring.ioc1.entity.Child;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -36,5 +37,11 @@ public class SpringApplication {
 
         Apple apple = context.getBean("com.xxx.spring.ioc1.entity.Apple", Apple.class);
         System.out.println(apple.getOrigin());
+
+        /**
+         * 基于setter方法注入对象
+         */
+        Child lily = context.getBean("lilyObj", Child.class);
+        lily.eat();
     }
 }
