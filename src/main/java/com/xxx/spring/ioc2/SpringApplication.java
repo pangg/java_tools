@@ -12,6 +12,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class SpringApplication {
     public static void main(String[] args) {
+        /**
+         * classpath:applicationContext.xml路径表达式
+         * 1。classpath:config.xml  扫描classpath跟路径(不包含jar)的config.xml
+         * 2。classpath:com/xxx/config.xml    扫描classpath下(不包含jar)com.xxx包中的config.xml
+         * 3。classpath*:com/xxx/config.xml   扫描classpath下(包含jar)com.xxx包中的config.xml
+         * 4。classpath:config-*.xml          扫描classpath跟路径下所有以config-开头的xml文件
+         * 5。classpath:com\/**\/config.xml(不包含转义符号)   扫描com包下(包含任何子包)的config.xml
+         * 6。file:c:/config.xml                           扫描c盘跟路径config.xml
+         */
+
         // 多applicationContext配置文件加载
         //String[] contextXmls = new String[] {"classpath:applicationContext_1.xml", "classpath:applicationContext_2.xml"};
         //ApplicationContext context = new ClassPathXmlApplicationContext(contextXmls);
