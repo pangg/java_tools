@@ -3,6 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        bean id与name属性相同点：
+            1。bean id与name都是设置对象在IoC容器中唯一标识；
+            2。两者在同一个配置文件中都不允许重复出现；
+            3。两者允许在多个配置文件中出现重复，新对象覆盖旧对象；
+    -->
+
     <!--bean标签默认通过默认构造方法创建对象-->
     <bean id="apple1" class="com.xxx.spring.ioc1.entity.Apple">
 
@@ -27,4 +35,17 @@
     <!--利用工厂实例方法获取对象-->
     <bean id="factoryInstance" class="com.xxx.spring.ioc2.factory.AppleFactoryInstance" />
     <bean id="apple5" factory-bean="factoryInstance" factory-method="createSweetApple" />
+
+    <!--单个bean配置文件，相同name只能出现一次；其他配置文件可以出现相同name标识，但是会按照加载顺序，后加载覆盖之前加载的对象-->
+    <!--一个Bean多个标识-->
+    <bean name="apple6,name7" class="com.xxx.spring.ioc1.entity.Apple">
+
+    </bean>
+
+    <!--没有id与name的bean默认使用类名全称作为bean的标识-->
+    <bean class="com.xxx.spring.ioc1.entity.Apple">
+        <constructor-arg index="0" value="红富士" />
+        <constructor-arg index="1" value="红色" />
+        <constructor-arg index="2" value="欧洲" />
+    </bean>
 </beans>

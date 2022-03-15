@@ -27,4 +27,17 @@
     <!--利用工厂实例方法获取对象-->
     <bean id="factoryInstance" class="com.xxx.spring.ioc2.factory.AppleFactoryInstance" />
     <bean id="apple5" factory-bean="factoryInstance" factory-method="createSweetApple" />
+
+    <!--单个bean配置文件，相同name只能出现一次；其他配置文件可以出现相同name标识，但是会按照加载顺序，后加载覆盖之前加载的对象-->
+    <!--一个Bean多个标识-->
+    <bean name="apple6,name7" class="com.xxx.spring.ioc1.entity.Apple">
+
+    </bean>
+
+    <!--没有id与name的bean默认使用类名全称作为bean的标识-->
+    <bean class="com.xxx.spring.ioc1.entity.Apple">
+        <constructor-arg index="0" value="红富士" />
+        <constructor-arg index="1" value="红色" />
+        <constructor-arg index="2" value="欧洲" />
+    </bean>
 </beans>
