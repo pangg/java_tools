@@ -41,4 +41,17 @@
         </property>
     </bean>
 
+    <!--无name和id bean-->
+    <bean class="com.xxx.spring.ioc4.entity.Computer">
+        <constructor-arg name="brand" value="微星" />
+        <constructor-arg name="type" value="台式机" />
+        <constructor-arg name="sn" value="123124124124" />
+        <constructor-arg name="price" value="4085" />
+    </bean>
+    <bean class="com.xxx.spring.ioc4.entity.Computer">
+        <constructor-arg name="brand" value="华硕" />
+        <constructor-arg name="type" value="笔记本" />
+        <constructor-arg name="sn" value="2353534534" />
+        <constructor-arg name="price" value="5085" />
+    </bean>
 </beans>
