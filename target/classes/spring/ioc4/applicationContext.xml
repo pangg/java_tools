@@ -3,55 +3,46 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="c1" class="com.xxx.spring.ioc4.entity.Computer">
-        <constructor-arg name="brand" value="华为" />
-        <constructor-arg name="type" value="台式机" />
-        <constructor-arg name="sn" value="838234231" />
-        <constructor-arg name="price" value="3085" />
+
+    <!--
+        bean scope属性
+            1。bean scope属性用于决定对象何时被创建与作用范围；
+            2。bean scope配置将影响容器内对象的数量；
+            3。bean scope默认值singleton(单例)，指全局共享同一个对象实例；
+
+
+        bean scope属性清单
+            1。singleton 单例(默认值)，每一个容器有且只有唯一的实例，实例被全局共享；
+            2。prototype 多例，每次使用(调用)时都是创建一个实例；
+            3。request web环境下，每一次独立请求存在唯一实例
+            4。session web环境下，每一个session存在有唯一实例；
+            5。application web环境下，ServletContext存在唯一实例；
+            6。websocket 每一次WebSocket连接中存在唯一实例；
+
+
+        singleton在容器是单例多线程执行，存在线程安全风险；在IoC容器启动时进行对象实例化；
+        prototype在容器中是多实例，占用资源更多，不存在线程安全问题；在调用getBean()或对象注入时进行实例化；
+
+    -->
+
+    <!--<bean id="userDao1" class="com.xxx.spring.ioc4.dao.UserDao">
+    </bean>-->
+    <!--多例，在调用getBean()或对象注入时进行实例化-->
+    <bean id="userDao2" class="com.xxx.spring.ioc4.dao.UserDao" scope="prototype">
     </bean>
 
-    <bean id="company" class="com.xxx.spring.ioc4.entity.Company">
-        <property name="rooms">
-            <set>
-                <value>2001-总裁办</value>
-                <value>2003-总经理办公室</value>
-                <value>2010-研发部会议室</value>
-                <value>2010-研发部会议室</value>
-            </set>
-        </property>
-        <property name="computers">
-            <map>
-                <entry key="dev-88172" value-ref="c1" />
-                <entry key="dev-88173">
-                    <bean class="com.xxx.spring.ioc4.entity.Computer">
-                        <constructor-arg name="brand" value="华为" />
-                        <constructor-arg name="type" value="笔记本" />
-                        <constructor-arg name="sn" value="413412341" />
-                        <constructor-arg name="price" value="5060" />
-                    </bean>
-                </entry>
-            </map>
-        </property>
-        <property name="info">
-            <props>
-                <prop key="phone">010-12312412</prop>
-                <prop key="address">杭州市西湖区XXXX</prop>
-                <prop key="website">http://baidu.com</prop>
-            </props>
-        </property>
+    <!--默认是单例，初始化对象顺序userDao1，userService1-->
+    <!--<bean id="userService1" class="com.xxx.spring.ioc4.service.UserService">
+        <property name="userDao" ref="userDao1" />
+    </bean>-->
+
+    <!--UserService是多例，调用getBean时进行实例化，而userDao1在容器初始化时进行实例化-->
+    <!--<bean id="userService2" class="com.xxx.spring.ioc4.service.UserService" scope="prototype">
+        <property name="userDao" ref="userDao1" />
+    </bean>-->
+
+    <bean id="userService3" class="com.xxx.spring.ioc4.service.UserService" scope="prototype">
+        <property name="userDao" ref="userDao2" />
     </bean>
 
-    <!--无name和id bean-->
-    <bean class="com.xxx.spring.ioc4.entity.Computer">
-        <constructor-arg name="brand" value="微星" />
-        <constructor-arg name="type" value="台式机" />
-        <constructor-arg name="sn" value="123124124124" />
-        <constructor-arg name="price" value="4085" />
-    </bean>
-    <bean class="com.xxx.spring.ioc4.entity.Computer">
-        <constructor-arg name="brand" value="华硕" />
-        <constructor-arg name="type" value="笔记本" />
-        <constructor-arg name="sn" value="2353534534" />
-        <constructor-arg name="price" value="5085" />
-    </bean>
 </beans>

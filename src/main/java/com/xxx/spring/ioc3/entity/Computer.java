@@ -1,4 +1,4 @@
-package com.xxx.spring.ioc4.entity;
+package com.xxx.spring.ioc3.entity;
 
 public class Computer {
     private String brand;
