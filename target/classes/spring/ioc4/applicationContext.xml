@@ -41,8 +41,14 @@
         <property name="userDao" ref="userDao1" />
     </bean>-->
 
+    <!--UserService和userDao2都是多例，UserService在调用getBean时进行实例化，userDao2在调用setter注入时进行实例化-->
     <bean id="userService3" class="com.xxx.spring.ioc4.service.UserService" scope="prototype">
         <property name="userDao" ref="userDao2" />
+    </bean>
+
+    <bean id="order1" class="com.xxx.spring.ioc4.entity.Order" init-method="init" destroy-method="destory">
+        <property name="price" value="19.8" />
+        <property name="quantity" value="1000" />
     </bean>
 
 </beans>
