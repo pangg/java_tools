@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
  * beanId=userDao
  * 或者在Repository("udao")设置beanId
  */
-@Repository("udao")
-public class UserDao {
+@Repository
+public class UserDao implements IUserDao {
+    public UserDao() {
+        System.out.println("正在创建UserDao："+this);
+    }
 }
