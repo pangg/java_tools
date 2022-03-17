@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * bean scope属性
+ * Bean 生命周期
  */
 public class SpringApplication {
     public static void main(String[] args) {
