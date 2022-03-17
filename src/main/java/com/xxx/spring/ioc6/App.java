@@ -19,6 +19,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *  按名称装配：
  *      1。@Named 与@Inject配合使用，JSR-300规范，按属性名自动装配属性
  *      2。@Resource 基于JSP-250规范，优先按名称，再按类型智能匹配
+ *
+ *
+ * 元数据注解：
+ *      1。@Primary 按类型装配时出现多个相同类型的对象，拥有此注解对象优先被注入；
+ *      2。@PostConstruct 描述方法，相当于XML中init-method配置的注解版本；
+ *      3。@PreDestroy 描述方法，相当于XML中destroy-method配置的注解版本；
+ *      4。@Score 设置对象的scope属性；设置单例或多例
+ *      5。@Value 为属性注入静态数据；
+ *
+ *
  */
 public class App {
     public static void main(String[] args) {
@@ -28,11 +38,11 @@ public class App {
             System.out.println(id + ":" + context.getBean(id));
         }*/
 
-        /*UserService userService = context.getBean("userService", UserService.class);
-        System.out.println(userService.getUserDao());*/
+        UserService userService = context.getBean("userService", UserService.class);
+        System.out.println(userService.getUserDao());
 
-        DepartmentService departmentService = context.getBean("departmentService", DepartmentService.class);
-        departmentService.joinDepartment();
+        /*DepartmentService departmentService = context.getBean("departmentService", DepartmentService.class);
+        departmentService.joinDepartment();*/
 
     }
 }

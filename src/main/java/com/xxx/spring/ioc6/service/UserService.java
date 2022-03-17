@@ -3,7 +3,11 @@ package com.xxx.spring.ioc6.service;
 import com.xxx.spring.ioc6.dao.IUserDao;
 import com.xxx.spring.ioc6.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
 
 /**
  * 利用@Autowired自动装配的问题：
@@ -14,11 +18,20 @@ import org.springframework.stereotype.Service;
  *      3。最优解决方案使用 @Resource
  */
 @Service
+@Scope("prototype")  //设置单例/多例，XML中bean scope完全相同
 public class UserService {
      // @Autowired
     // Spring IoC容器会自动通过反射技术将属性private修饰符自动改为public，直接进行赋值
     // 不再执行set方法
     private IUserDao userDao;
+
+    @Value("${metaData}")
+    private String metaData;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("初始化UserService对象～，metaData："+metaData);
+    }
 
     public UserService() {
         System.out.println("正在创建UserService："+ this);
