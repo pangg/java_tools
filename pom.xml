@@ -127,6 +127,13 @@
             <version>5.2.6.RELEASE</version>
         </dependency>
 
+        <!--aspectjweaver是Spring AOP的底层依赖-->
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+
         <!-- spring-test -->
         <dependency>
             <groupId>org.springframework</groupId>
