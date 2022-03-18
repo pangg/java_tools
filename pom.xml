@@ -127,6 +127,13 @@
             <version>5.2.6.RELEASE</version>
         </dependency>
 
+        <!-- spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.2.6.RELEASE</version>
+        </dependency>
+
         <!--Dom4j是java的xml解析组件-->
         <dependency>
             <groupId>org.dom4j</groupId>
