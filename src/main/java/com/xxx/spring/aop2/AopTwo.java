@@ -4,6 +4,9 @@ import com.xxx.spring.aop2.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/**
+ * 通过注解来实现AOP
+ */
 public class AopTwo {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/aop2/applicationContext.xml");
