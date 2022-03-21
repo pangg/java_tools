@@ -6,6 +6,14 @@ public class UserService {
     private UserDao userDao;
 
     public void createUser() {
+        /*if (true) {
+            throw new RuntimeException("该用户已存在～");
+        }*/
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("执行创建用户业务逻辑～");
         userDao.insert();
     }

@@ -29,7 +29,7 @@
         <!--execution(public * com.xxx.spring.aop1..*.*(..)) 说明切面作用在com.xxx.spring.aop1包下的所有类的所有方法上 -->
         <!--<aop:pointcut id="pointcut" expression="execution(public * com.xxx.spring.aop1..*.*(..))" />--> <!--匹配com.xxx.spring.aop1包下的所有类的所有方法-->
 
-        <!--<aop:pointcut id="pointcut" expression="execution(public * com.xxx.spring.aop1..*Service.*(..))" />-->  <!--匹配com.xxx.spring.aop1包下的所有Service类的所有方法-->
+        <aop:pointcut id="pointcut" expression="execution(public * com.xxx.spring.aop1..*Service.*(..))" />  <!--匹配com.xxx.spring.aop1包下的所有Service类的所有方法-->
 
         <!--<aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.aop1..*Service.*(..))" />-->  <!--public通配符可以去掉-->
 
@@ -41,12 +41,26 @@
         <!--<aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.aop1..*Service.*())" />-->  <!--捕获无参数方法-->
 
         <!--<aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.aop1..*Service.*(*,*))" />-->  <!--捕获两个参数的数方法-->
-        <aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.aop1..*Service.*(String,*))" />  <!--捕获两个参数的数方法-->
+        <!--<aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.aop1..*Service.*(String,*))" />-->  <!--捕获两个参数的数方法-->
 
         <!--定义切面类-->
+        <!--
+            输出日志的产生会 与 下面各种通知的配置顺序一致
+        -->
         <aop:aspect ref="methodAspect">
             <!--before通知，代表在目标方法运行前先执行methodAspect.printExecutionTime()-->
             <aop:before method="printExecutionTime" pointcut-ref="pointcut" />
+
+            <!--returning="ret" 将返回值注入参数ret-->
+            <aop:after-returning method="doAfterReturning" returning="ret" pointcut-ref="pointcut" />
+
+            <aop:after method="doAfter" pointcut-ref="pointcut" />
+
+            <!--throwing="th" 将执行的异常信息注入到参数th中-->
+            <aop:after-throwing method="doAfterThrowing" throwing="th" pointcut-ref="pointcut" />
+
+            <!--环绕通知-->
+            <aop:around method="roundCheck" pointcut-ref="pointcut" />
         </aop:aspect>
     </aop:config>
 

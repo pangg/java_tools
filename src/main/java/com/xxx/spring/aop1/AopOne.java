@@ -36,6 +36,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *      * 通配符
  *      .. 包通配符
  *      (..) 参数通配符
+ *
+ *  五种通知类型
+ *      1。Before Advice  前置通知，目标方法运行前执行
+ *      2。After Returning Advice  返回后通知目标方法，返回数据后执行
+ *      3。After Throwing Advice   异常通知，目标方法抛出异常后执行
+ *      4。After Advice   后置通知，目标方法运行后执行
+ *      5。Around Advice  最强大通知，自定义通知执行时机，可决定目标方法是否运行
+ *
+ * 特殊通知 - 引介增强
  */
 public class AopOne {
     public static void main(String[] args) {
