@@ -12,6 +12,7 @@ import java.util.Date;
 public class EmployeeService {
     private EmployeeDao employeeDao;
     private DataSourceTransactionManager transactionManager;
+    private BatchService batchService;
 
     /**
      * 声明式事物
@@ -60,6 +61,23 @@ public class EmployeeService {
             transactionManager.rollback(status);
             throw e;
         }
+    }
+
+    public void startImportJob() {
+        batchService.importJob1();
+        if (true) {
+            throw new RuntimeException("意料之外的异常～");
+        }
+        batchService.importJob2();
+        System.out.println("批量导入成功");
+    }
+
+    public BatchService getBatchService() {
+        return batchService;
+    }
+
+    public void setBatchService(BatchService batchService) {
+        this.batchService = batchService;
     }
 
     public EmployeeDao getEmployeeDao() {

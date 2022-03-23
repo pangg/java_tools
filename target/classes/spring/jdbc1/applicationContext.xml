@@ -33,6 +33,11 @@
     <bean id="employeeService" class="com.xxx.spring.jdbc1.service.EmployeeService">
         <property name="employeeDao" ref="employeeDao"/>
         <property name="transactionManager" ref="transactionManager" />
+        <property name="batchService" ref="beachService" />
+    </bean>
+
+    <bean id="beachService" class="com.xxx.spring.jdbc1.service.BatchService">
+        <property name="employeeDao" ref="employeeDao" />
     </bean>
 
     <!--1。事物管理器，用于创建事物，提交，回滚-->
@@ -51,8 +56,12 @@
             <tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true" />
             <tx:method name="get*" propagation="NOT_SUPPORTED" read-only="true" />
 
+            <tx:method name="importJob1" propagation="REQUIRES_NEW" />
+            <tx:method name="importJob2" propagation="REQUIRES_NEW" />
+
             <!--不符合上面规则的执行次条规则，不开启事物-->
-            <tx:method name="*" propagation="NOT_SUPPORTED" />
+            <!--<tx:method name="*" propagation="NOT_SUPPORTED" />-->
+            <tx:method name="*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
 

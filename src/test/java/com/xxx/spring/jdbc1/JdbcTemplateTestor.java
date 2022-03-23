@@ -79,4 +79,9 @@ public class JdbcTemplateTestor {
         employeeService.batchImportByTx();
     }
 
+    @Test
+    public void testStartImportJob() {
+        employeeService.startImportJob();
+    }
+
 }

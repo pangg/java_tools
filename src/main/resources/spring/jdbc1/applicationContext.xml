@@ -33,30 +33,53 @@
     <bean id="employeeService" class="com.xxx.spring.jdbc1.service.EmployeeService">
         <property name="employeeDao" ref="employeeDao"/>
         <property name="transactionManager" ref="transactionManager" />
+        <property name="batchService" ref="beachService" />
     </bean>
 
-    <!--1。事物管理器，用于创建事物，提交，回滚-->
+    <bean id="beachService" class="com.xxx.spring.jdbc1.service.BatchService">
+        <property name="employeeDao" ref="employeeDao" />
+    </bean>
+    
+    <!--
+    事务传播行为：
+        是指多个拥有事务的方法在嵌套调用时的事务控制方式。
+
+    事务传播行为的七种类型
+        *1。REQUIRED（默认）  如果当前没有事务，就新建一个事务，如果已经存在一个事务中，加入到这个事务中。这是最常见的选择；
+        2。SUPPORTS         支持当前事务，如果当前没有事务，就以非事务方式执行
+        3。MANDATORY        使用当前的事务，如果当前没有事务，就抛出异常；
+        *4。REQUIRED_NEW     新建事务，如果当前存在事务，把当前事务挂起；
+        *5。NOT_SUPPORTED    以非事务方式执行操作，如果当前存在事务，就把当前事务挂起；
+        6。NEVER            以非事务方式执行，如果当前存在事务，则抛出异常；
+        7。NESTED           如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则执行与REQUIRED类似的操作。
+    -->
+
+    <!--1。事务管理器，用于创建事务，提交，回滚-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
-    <!--2。事物通知配置，决定哪些方法使用事物，哪些方法不使用事物-->
+    <!--2。事务通知配置，决定哪些方法使用事务，哪些方法不使用事务-->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <!--目标方法名为batchImportByTx时，启用声明式事物，成功提交，运行异常时回滚 -->
+            <!--目标方法名为batchImportByTx时，启用声明式事务，成功提交，运行异常时回滚 -->
             <tx:method name="batchImportByTx" propagation="REQUIRED" />
-            <!--目标方法名称符合batch*的方法均开启事物-->
+            <!--目标方法名称符合batch*的方法均开启事务-->
             <tx:method name="batch*" propagation="REQUIRED" />
-            <!--目标方法名称符合find*的方法不开启事物，只读方法-->
+            <!--目标方法名称符合find*的方法不开启事务，只读方法-->
             <tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true" />
             <tx:method name="get*" propagation="NOT_SUPPORTED" read-only="true" />
 
-            <!--不符合上面规则的执行次条规则，不开启事物-->
-            <tx:method name="*" propagation="NOT_SUPPORTED" />
+            <tx:method name="importJob1" propagation="REQUIRES_NEW" />
+            <tx:method name="importJob2" propagation="REQUIRES_NEW" />
+
+            <!--不符合上面规则的执行次条规则，不开启事务-->
+            <!--<tx:method name="*" propagation="NOT_SUPPORTED" />-->
+            <tx:method name="*" propagation="REQUIRED" />
         </tx:attributes>
     </tx:advice>
 
-    <!--定义声明式事物的作用范围-->
+    <!--定义声明式事务的作用范围-->
     <aop:config>
         <aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.jdbc1..*Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
