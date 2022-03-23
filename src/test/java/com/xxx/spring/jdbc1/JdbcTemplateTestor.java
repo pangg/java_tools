@@ -71,4 +71,12 @@ public class JdbcTemplateTestor {
         employeeService.batchImport();
     }
 
+    /**
+     * 声明式事物(推荐使用)
+     */
+    @Test
+    public void testBeachInsertByTx() {
+        employeeService.batchImportByTx();
+    }
+
 }

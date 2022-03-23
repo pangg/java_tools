@@ -2,10 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--数据源-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -29,8 +35,31 @@
         <property name="transactionManager" ref="transactionManager" />
     </bean>
 
-    <!--事物管理器-->
+    <!--1。事物管理器，用于创建事物，提交，回滚-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
+
+    <!--2。事物通知配置，决定哪些方法使用事物，哪些方法不使用事物-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--目标方法名为batchImportByTx时，启用声明式事物，成功提交，运行异常时回滚 -->
+            <tx:method name="batchImportByTx" propagation="REQUIRED" />
+            <!--目标方法名称符合batch*的方法均开启事物-->
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <!--目标方法名称符合find*的方法不开启事物，只读方法-->
+            <tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true" />
+            <tx:method name="get*" propagation="NOT_SUPPORTED" read-only="true" />
+
+            <!--不符合上面规则的执行次条规则，不开启事物-->
+            <tx:method name="*" propagation="NOT_SUPPORTED" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!--定义声明式事物的作用范围-->
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.xxx.spring.jdbc1..*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+    </aop:config>
+
 </beans>

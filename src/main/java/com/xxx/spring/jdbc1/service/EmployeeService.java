@@ -14,6 +14,24 @@ public class EmployeeService {
     private DataSourceTransactionManager transactionManager;
 
     /**
+     * 声明式事物
+     */
+    public void batchImportByTx() {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 3) {
+                throw new RuntimeException("意料之外的异常～");
+            }
+            Employee employee = new Employee();
+            employee.setEno(9020 + i);
+            employee.setEname("员工" + i);
+            employee.setSalary(4000f);
+            employee.setDname("市场部");
+            employee.setHiredate(new Date());
+            employeeDao.insert(employee);
+        }
+    }
+
+    /**
      * 编程式事务
      */
     public void batchImport() {
