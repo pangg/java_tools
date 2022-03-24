@@ -1,5 +1,6 @@
 package com.xxx.springmvc.controller;
 
+import com.xxx.springmvc.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,5 +21,22 @@ public class URLMappingController {
     public String postMapping(String username, Long password) {
         System.out.println(username + ":" + password);
         return "This is post method!";
+    }
+
+    @PostMapping("/p1")
+    @ResponseBody
+    public String postMapping1(User user) {
+        System.out.println(user.getUsername() + ":" + user.getPassword());
+        return "This is post method~~!";
+    }
+
+    /**
+     * 通过bean和方法参数同时接收请求数据
+     */
+    @PostMapping("/p2")
+    @ResponseBody
+    public String postMapping2(User user, String username) {
+        System.out.println(user.getUsername() + ":" + user.getPassword() + ":" + username);
+        return "This is post method!---";
     }
 }
