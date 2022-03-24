@@ -1,8 +1,8 @@
-package com.xxx.spring.jdbc1;
+package com.xxx.spring.jdbc2;
 
-import com.xxx.spring.jdbc1.dao.EmployeeDao;
-import com.xxx.spring.jdbc1.entity.Employee;
-import com.xxx.spring.jdbc1.service.EmployeeService;
+import com.xxx.spring.jdbc2.dao.EmployeeDao;
+import com.xxx.spring.jdbc2.entity.Employee;
+import com.xxx.spring.jdbc2.service.EmployeeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring/jdbc1/applicationContext.xml")
+@ContextConfiguration(locations = "classpath:spring/jdbc2/applicationContext.xml")
 public class JdbcTemplateTestor {
     @Resource
     private EmployeeDao employeeDao;
@@ -21,7 +21,7 @@ public class JdbcTemplateTestor {
 
     @Test
     public void testFindById() {
-        Employee employee = employeeDao.findById(1);
+        Employee employee = employeeDao.findById(2);
         System.out.println(employee);
     }
 
@@ -38,7 +38,7 @@ public class JdbcTemplateTestor {
     @Test
     public void testInsert() {
         Employee employee = new Employee();
-        employee.setEno(12);
+        employee.setEno(13);
         employee.setEname("王武");
         employee.setSalary(888.99f);
         employee.setDname("研发");
@@ -63,21 +63,11 @@ public class JdbcTemplateTestor {
         System.out.println(employeeDao.delete(1));
     }
 
-    /**
-     * 编程式事务
-     */
     @Test
     public void testBeachInsert() {
         employeeService.batchImport();
     }
 
-    /**
-     * 声明式事物(推荐使用)
-     */
-    @Test
-    public void testBeachInsertByTx() {
-        employeeService.batchImportByTx();
-    }
 
     @Test
     public void testStartImportJob() {
