@@ -10,3 +10,7 @@
         @RequestMapping 通用绑定
         @GetMapping 绑定Get请求
         @PostMapping 绑定post请求
+
+### 请求参数接收 ###
+    1。使用Controller方法接收参数；
+    2。使用Java Bean接收数据
