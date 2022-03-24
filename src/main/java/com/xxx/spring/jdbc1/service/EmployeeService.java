@@ -16,6 +16,11 @@ public class EmployeeService {
 
     /**
      * 声明式事物
+     *
+     * 配置过程：
+     *  1。配置TransactionManager事务管理器；
+     *  2。配置事务通知与事务属性；
+     *  3。为事务通知绑定PointCut切点。
      */
     public void batchImportByTx() {
         for (int i = 1; i <= 10; i++) {
