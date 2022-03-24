@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--
+        context:component-scan标签作用：
+        在Spring IOC初始化过程中，自动创建并管理com.xxx.springmvc及子包中拥有以下注解的对象：
+        @Repository
+        @Service
+        @Controller
+        @Component
+    -->
+    <context:component-scan base-package="com.xxx.springmvc"></context:component-scan>
+
+    <!--启用Spring MVC的注解开发模式-->
+    <mvc:annotation-driven />
+    <!--将图片/js/css等静态资源排除在外，可提高执行效率-->
+    <mvc:default-servlet-handler />
+
+</beans>
