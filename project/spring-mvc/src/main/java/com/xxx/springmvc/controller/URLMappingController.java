@@ -112,4 +112,20 @@ public class URLMappingController {
 
         return "success";
     }
+
+    /**
+     * 关联对象赋值
+     */
+    @PostMapping("/delivery")
+    @ResponseBody
+    public String delivery(Form form) {
+        System.out.println(form.getName());
+        System.out.println(form.getCourse());
+        for (Integer p : form.getPurpose()) {
+            System.out.println(p);
+        }
+        System.out.println(form.getDelivery());
+        return "success";
+    }
+
 }
