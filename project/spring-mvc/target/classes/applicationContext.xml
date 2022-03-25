@@ -22,8 +22,22 @@
     <context:component-scan base-package="com.xxx.springmvc"></context:component-scan>
 
     <!--启用Spring MVC的注解开发模式-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven conversion-service="conversionService" />
     <!--将图片/js/css等静态资源排除在外，可提高执行效率-->
     <mvc:default-servlet-handler />
 
+
+    <!--
+        MyDateConverter实现Converter，用于开发自定义转换器；
+        如果存在自定义转换器，并且使用了局部转换器，默认范围小的优先级高，会使用局部转换器；
+        但是@DateTimeFormat(pattern = "yyyy-MM-dd")和自定义Date转换器，二者只能使用一个，存在自定义Date转换器就会使用自定义的转换器而忽略@DateTimeFormat转换器
+    -->
+    <!--自定义时间类型转换器-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.xxx.springmvc.converter.MyDateConverter"></bean>
+            </set>
+        </property>
+    </bean>
 </beans>

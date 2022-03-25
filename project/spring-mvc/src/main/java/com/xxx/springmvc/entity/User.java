@@ -1,8 +1,14 @@
 package com.xxx.springmvc.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class User {
     private String username;
     private Long password;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createTime;
 
     public String getUsername() {
         return username;
@@ -18,5 +24,13 @@ public class User {
 
     public void setPassword(Long password) {
         this.password = password;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
