@@ -22,7 +22,19 @@
     <context:component-scan base-package="com.xxx.springmvc"></context:component-scan>
 
     <!--启用Spring MVC的注解开发模式-->
-    <mvc:annotation-driven conversion-service="conversionService" />
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <!--在Servlet中配置：response.setContentType("text/html;charset=utf-8")-->
+                        <value>text/html;charset=utf-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
     <!--将图片/js/css等静态资源排除在外，可提高执行效率-->
     <mvc:default-servlet-handler />
 

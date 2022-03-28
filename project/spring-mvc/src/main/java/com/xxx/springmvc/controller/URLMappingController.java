@@ -28,7 +28,7 @@ public class URLMappingController {
     public String postMapping(String username, Long password, @DateTimeFormat(pattern = "yyyy-MM-dd") Date createTime) {
         System.out.println(username + ":" + password);
         System.out.println(createTime);
-        return "This is post method!";
+        return "This is post method!这是POST响应！";
     }
 
     @PostMapping("/p1")
