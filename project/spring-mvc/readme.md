@@ -61,4 +61,7 @@
         b。通过ModelAndView可将包含数据对象与模板引擎进行绑定；
         c。SpringMVC中默认的View是JSP，也可以配置其他模版引擎；
 
-
+### ModelAndView ###
+    1。mav.addObject()方法设置的属性默认存放在当前请求中；
+    2。默认ModelAndView使用请求转发（forward）至页面；
+    3。重定向使用new ModelAndView("redirect:/index.jsp");

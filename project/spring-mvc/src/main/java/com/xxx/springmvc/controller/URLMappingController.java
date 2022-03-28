@@ -4,6 +4,7 @@ import com.xxx.springmvc.entity.Form;
 import com.xxx.springmvc.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -136,7 +137,15 @@ public class URLMappingController {
 
     @GetMapping("/view")
     public ModelAndView showView(Integer userId) {
-        ModelAndView mav = new ModelAndView("/view.jsp");
+        // ModelAndView mav = new ModelAndView("/view.jsp");
+        // ModelAndView mav = new ModelAndView("redirect:/view.jsp");
+
+        /**
+         *  /view.jsp 绝对路径，以应用webapp为根目录
+         *  view.jsp 相对路径，会加上上面全局"/um"
+         */
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/view.jsp");
         User user = new User();
         if (userId == 1) {
             user.setUsername("Lily");
@@ -147,5 +156,31 @@ public class URLMappingController {
         }
         mav.addObject("user", user);
         return mav;
+    }
+
+    /**
+     * String与ModelMap实现ModelAndView功能
+     *
+     * Controller方法返回String的情况
+     *      1。方法被@ResponseBody描述，SpringMVC直接响应String字符串本身；
+     *      2。方法不存在@ResponseBody，则SpringMVC处理String指代的视图（页面）；
+     *
+     * 如果页面不需要绑定数据，则就不需要ModelMap这个参数；
+     *
+     */
+    @GetMapping("/view1")
+    @ResponseBody
+    public String showView1(Integer userId, ModelMap modelMap) {
+        String view = "/view.jsp";
+        User user = new User();
+        if (userId == 1) {
+            user.setUsername("Lily");
+        } else if (userId == 3) {
+            user.setUsername("李四-1");
+        } else if (userId == 2) {
+            user.setUsername("Lina");
+        }
+        modelMap.addAttribute("user", user);
+        return view;
     }
 }
