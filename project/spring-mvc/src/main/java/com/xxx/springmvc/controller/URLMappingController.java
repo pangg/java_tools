@@ -5,6 +5,7 @@ import com.xxx.springmvc.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
@@ -133,4 +134,18 @@ public class URLMappingController {
         return "success";
     }
 
+    @GetMapping("/view")
+    public ModelAndView showView(Integer userId) {
+        ModelAndView mav = new ModelAndView("/view.jsp");
+        User user = new User();
+        if (userId == 1) {
+            user.setUsername("Lily");
+        } else if (userId == 3) {
+            user.setUsername("李四");
+        } else if (userId == 2) {
+            user.setUsername("Lina");
+        }
+        mav.addObject("user", user);
+        return mav;
+    }
 }

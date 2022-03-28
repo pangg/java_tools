@@ -50,3 +50,15 @@
                     </bean>
                 </mvc:message-converters>
             </mvc:annotation-driven>
+
+### 响应中产生结果 ###
+    1。@ResponseBody - 产生响应文本：
+        a。直接产生响应体的数据，过程不涉及任何视图；
+        b。可产生标准字符串/JSON/XML等格式数据；
+        c。@ResponseBody被StringHttpMessageConverter所影响；
+    2。ModelAndView - 利用模板引擎渲染输出：
+        a。指"模型(数据)与视图(界面)"对象；
+        b。通过ModelAndView可将包含数据对象与模板引擎进行绑定；
+        c。SpringMVC中默认的View是JSP，也可以配置其他模版引擎；
+
+
