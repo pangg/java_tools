@@ -32,5 +32,10 @@
     <!--将图片/js/css等静态资源排除在外，可提高执行效率-->
     <mvc:default-servlet-handler />
 
+    <!--全局跨域配置-->
+    <mvc:cors>
+        <mvc:mapping path="/restful/**"
+                allowed-origins="http://localhost:8080,http://www.baidu.com" max-age="3600"/>
+    </mvc:cors>
 
 </beans>

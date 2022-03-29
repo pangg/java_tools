@@ -11,11 +11,29 @@ import java.util.*;
  *      简单请求是指标准结构的http请求，对应的get/post请求
  *      非简单请求是复杂要求的http请求，指put/delete、扩展标准请求
  *      两者最大的区别是非简单请求发送前需要发送预检请求
+ *
+ * 浏览器的同源策略：
+ *      同源策略阻止从一个域加载的脚本去获取另一个域上的资源；
+ *      只要协议、域名、端口有任何一个不同，都被当作是不同的域；
+ *      浏览器Console看到Access-Control-Allow-Origin就代表跨域了；
+ *
+ * HTML中允许跨域的标签：
+ *      <img>  显示远程图片
+ *      <script>   加载远程js
+ *      <link>     加载远程css
+ *
+ * Spring MVC 解决跨域访问
+ *      1. @CrossOrigin - Controller跨域注解；
+ *      2. <mvc:cors>  -   Spring MVC全局跨域配置；
+ *      3. 如果以上两种（全局和局部注解）都配置了，则优先以局部注解配置的为准；
+ *
  */
 
 // @Controller
 @RestController   // @RestController注解相当于@ResponseBody和@Controller的结合
 @RequestMapping("/restful")
+@CrossOrigin(origins = {"http://localhost:8080", "http://www.baidu.com"})
+// @CrossOrigin(origins = "*", maxAge = 3600)  // 允许所有网站跨域请求，不推荐使用；maxAge是指非简单请求的预检请求缓存时间
 public class RestfulController {
     @GetMapping("/request")
     //@ResponseBody
