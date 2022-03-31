@@ -59,6 +59,24 @@
             <version>2.9.9</version>
         </dependency>
 
+
+        <!--servlet引入：tomcat中包含servlet，因此该包只在开发和编译时引用该包，打包时不需要-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <!--开发和编译阶段使用-->
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!--logback-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
     </dependencies>
 
 

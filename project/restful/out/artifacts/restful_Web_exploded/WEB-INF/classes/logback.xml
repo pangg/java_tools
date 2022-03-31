@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%thread] %d %level %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="accessHistoryLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/tmp/testLog/history.%d.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%thread] %d %level %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="debug">
+        <appender-ref ref="console" />
+    </root>
+    <!-- additivity=false表示日志只会输入到文件中 -->
+    <logger name="com.xxx.restful.interceptor.AccessHistoryInterceptor" level="INFO" additivity="false">
+        <appender-ref ref="accessHistoryLog" />
+    </logger>
+</configuration>

@@ -27,6 +27,16 @@ import java.util.*;
  *      2. <mvc:cors>  -   Spring MVC全局跨域配置；
  *      3. 如果以上两种（全局和局部注解）都配置了，则优先以局部注解配置的为准；
  *
+ *  拦截器开发流程：
+ *      1。Maven依赖servlet-api；
+ *      2。实现HandlerInterceptor接口；
+ *      3。applicationContext配置过滤地址；
+ *
+ *  HandlerInterceptor接口：
+ *      1。preHandle  前置执行处理
+ *      2。postHandle  目标资源已被Spring MVC框架处理
+ *      3。afterCompletion  响应文本已经产生
+ *
  */
 
 // @Controller
@@ -96,6 +106,7 @@ public class RestfulController {
 
         list.add(p1);
         list.add(p2);
+        System.out.println("业务数据准备完成～～～");
         return list;
     }
 

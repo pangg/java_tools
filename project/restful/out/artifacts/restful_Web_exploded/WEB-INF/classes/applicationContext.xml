@@ -38,4 +38,35 @@
                 allowed-origins="http://localhost:8080,http://www.baidu.com" max-age="3600"/>
     </mvc:cors>
 
+
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!--'/**'代表拦截所有请求 -->
+            <!--拦截"/restful开头的接口"-->
+            <mvc:mapping path="/restful/**"/>
+            <!--exclude-mapping请求排除标签-->
+            <mvc:exclude-mapping path="/**.ico"/>
+            <mvc:exclude-mapping path="/**.jpg"/>
+            <mvc:exclude-mapping path="/**.gif"/>
+            <mvc:exclude-mapping path="/**.js"/>
+            <mvc:exclude-mapping path="/**.css"/>
+            <!--将静态资源全部放在resources目录下，一次性全部排除在外-->
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.xxx.restful.interceptor.MyInterceptor" />
+        </mvc:interceptor>
+
+        <!--<mvc:interceptor>
+            <mvc:mapping path="/restful/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.xxx.restful.interceptor.MyInterceptor1" />
+        </mvc:interceptor>-->
+
+        <mvc:interceptor>
+            <mvc:mapping path="/restful/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.xxx.restful.interceptor.AccessHistoryInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
