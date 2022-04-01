@@ -1,5 +1,8 @@
 package com.xxx.reader.mapper;
 
-public interface TestMapper {
-    public Integer insert();
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.xxx.reader.entity.Test;
+
+public interface TestMapper extends BaseMapper<Test> {
+    public Integer insertSample();
 }

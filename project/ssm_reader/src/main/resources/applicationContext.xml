@@ -69,14 +69,14 @@
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
         <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="maxActive" value="10" />
-        <property name="minIdle" value="5" />
+        <property name="maxActive" value="5" />
+        <property name="minIdle" value="2" />
     </bean>
 
     <!-- 3。SqlSessionFactoryBean用于根据配置信息创建SqlSessionFactory，不再需要我们自己编码创建 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
     <!--mybatis-plus-->
-    <!--<bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">-->
+    <bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <!-- 数据库连接池 -->
         <property name="dataSource" ref="dataSource" />
         <!--写sql的配置文件-->
