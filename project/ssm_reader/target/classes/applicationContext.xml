@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:task="http://www.springframework.org/schema/task"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--3. 开启springmvc注解模式-->
     <context:component-scan base-package="com.xxx.reader"/>
@@ -34,7 +38,6 @@
     <mvc:default-servlet-handler/>
 
 
-
     <!--5。配置freemaker模板引擎-->
     <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="/WEB-INF/ftl"/><!--读取模板引擎的位置-->
@@ -43,10 +46,55 @@
                 <prop key="defaultEncoding">UTF-8</prop><!--采用utf-8的编码读取-->
             </props>
         </property>
+        <!--
+            @See https://www.cnblogs.com/question-sky/p/7235634.html
+            preferFileSystemAccess属性默认为tru，默认为FileTemplateLoader加载器；
+            设置preferFileSystemAccess=false，直接使用SpringTemplateLoader
+        -->
+        <property name="preferFileSystemAccess" value="false" />
     </bean>
     <bean id="ViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="contentType" value="text/html;charset=utf-8"/>
         <property name="suffix" value=".ftl"/>
     </bean>
+
+
+    <!-- 数据库连接池 -->
+    <!-- 加载配置文件 -->
+    <context:property-placeholder location="classpath:db.properties" />
+    <!-- MyBatis整合步骤：2。配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close">
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="maxActive" value="10" />
+        <property name="minIdle" value="5" />
+    </bean>
+
+    <!-- 3。SqlSessionFactoryBean用于根据配置信息创建SqlSessionFactory，不再需要我们自己编码创建 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!--mybatis-plus-->
+    <!--<bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">-->
+        <!-- 数据库连接池 -->
+        <property name="dataSource" ref="dataSource" />
+        <!--写sql的配置文件-->
+        <property name="mapperLocations" value="classpath:mappers/*.xml"/>
+        <!-- 5。MyBatis配置文件地址 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+    <!--4。配置mapper扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xxx.reader.mapper" />
+    </bean>
+
+    <!--6。声明式事务配置-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
