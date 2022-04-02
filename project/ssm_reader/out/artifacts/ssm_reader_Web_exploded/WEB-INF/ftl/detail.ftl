@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer" />
     <title>${book.bookName}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="/resources/bootstrap/bootstrap.css">
@@ -174,7 +175,7 @@
     </div>
     <div class="reply pl-2 pr-2">
 
-            <#list evaluation as eva>
+            <#list evaluationList as eva>
             <div>
                 <div>
                     <span class="pt-1 small text-black-50 mr-2">${eva.createTime?string('MM-dd')}</span>

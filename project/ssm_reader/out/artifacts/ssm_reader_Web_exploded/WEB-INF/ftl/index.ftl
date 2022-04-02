@@ -37,7 +37,7 @@
     </style>
     <#--定义模板-->
     <script type="text/html" id="tpl">
-        <a href="/book/books/{{bookId}}" style="color: inherit">
+        <a href="/book/{{bookId}}" style="color: inherit">
             <div class="row mt-2 book">
                 <div class="col-4 mb-2 pr-2">
                     <img class="img-fluid" src="{{cover}}">
