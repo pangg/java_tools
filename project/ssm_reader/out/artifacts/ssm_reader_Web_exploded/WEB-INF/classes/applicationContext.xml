@@ -6,11 +6,16 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:task="http://www.springframework.org/schema/task"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
     <!--3. 开启springmvc注解模式-->
     <context:component-scan base-package="com.xxx.reader"/>
@@ -41,7 +46,12 @@
                 <prop key="defaultEncoding">UTF-8</prop><!--采用utf-8的编码读取-->
             </props>
         </property>
-        <!--<property name="preferFileSystemAccess" value="false" />-->
+        <!--
+            @See https://www.cnblogs.com/question-sky/p/7235634.html
+            preferFileSystemAccess属性默认为tru，默认为FileTemplateLoader加载器；
+            设置preferFileSystemAccess=false，直接使用SpringTemplateLoader
+        -->
+        <property name="preferFileSystemAccess" value="false" />
     </bean>
     <bean id="ViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="contentType" value="text/html;charset=utf-8"/>
@@ -59,24 +69,32 @@
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
         <property name="driverClassName" value="${jdbc.driver}" />
-        <property name="maxActive" value="10" />
-        <property name="minIdle" value="5" />
+        <property name="maxActive" value="5" />
+        <property name="minIdle" value="2" />
     </bean>
 
-    <!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!-- 3。SqlSessionFactoryBean用于根据配置信息创建SqlSessionFactory，不再需要我们自己编码创建 -->
+    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
     <!--mybatis-plus-->
-    <!--<bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">-->
+    <bean id="sessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
         <!-- 数据库连接池 -->
         <property name="dataSource" ref="dataSource" />
         <!--写sql的配置文件-->
         <property name="mapperLocations" value="classpath:mappers/*.xml"/>
-        <!-- 加载mybatis的全局配置文件 -->
+        <!-- 5。MyBatis配置文件地址 -->
         <property name="configLocation" value="classpath:mybatis-config.xml" />
     </bean>
-    <!--扫描mapper接口-->
+    <!--4。配置mapper扫描器-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.xxx.reader.mapper" />
     </bean>
+
+    <!--6。声明式事务配置-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>
