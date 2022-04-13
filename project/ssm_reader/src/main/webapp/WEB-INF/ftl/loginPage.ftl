@@ -141,7 +141,7 @@
             success: function (data) {
                 console.info(data);
                 if (data.code == "0") {
-                    window.location = "/category/selectCategory?ts=" + new Date().getTime();
+                    window.location = "/?ts=" + new Date().getTime();
                 } else {
                     showTips(true, "alert-danger", data.msg);
                     reloadVerifyCode();

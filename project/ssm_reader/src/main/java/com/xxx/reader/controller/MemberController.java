@@ -6,6 +6,7 @@ import com.xxx.reader.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -75,4 +76,19 @@ public class MemberController {
         return result;
     }
 
+    @PostMapping("/update_read_state")
+    @ResponseBody
+    public Map<String, Object> updateMemberReadState(Long memberId, Long bookId, @RequestParam("state") Integer readState) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            memberService.updateMemberReadState(memberId, bookId, readState);
+            result.put("code", "0");
+            result.put("msg", "success");
+        } catch (BussiException e) {
+            e.printStackTrace();
+            result.put("code", e.getCode());
+            result.put("msg", e.getMsg());
+        }
+        return result;
+    }
 }

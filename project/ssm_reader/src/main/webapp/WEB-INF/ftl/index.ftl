@@ -137,9 +137,9 @@
             </li>
 
         </ul>
-        <#if checkLogin??>
+        <#if loginMember??>
             <h6>
-                <img style="width: 2rem;margin-top: -5px" class="mr-1" src="../../images/user_icon.png">${checkLogin.nickname}
+                <img style="width: 2rem;margin-top: -5px" class="mr-1" src="../../images/user_icon.png">${loginMember.nickname}
             </h6>
             <#else >
             <a href="/login.html" class="btn btn-light btn-sm">

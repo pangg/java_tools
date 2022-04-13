@@ -57,17 +57,17 @@
             </#if>
 
             /*未登录需要提示登录*/
-            <#if !checkLogin ??>
+            <#if !loginMember ??>
                 $("*[data-read-state],#btnEvaluation,*[data-evaluation-id]").click(function () {
                     $("#exampleModalCenter").modal("show");
                 })
             </#if>
             /*已登录*/
-            <#if checkLogin ??>
+            <#if loginMember ??>
             /*更阅读状态*/
             $("*[data-read-state]").click(function () {
                 var state=$(this).data("read-state");
-                $.post("/update_state",{bookId:${book.bookId},memberId:${checkLogin.memberId},state:state},function (data) {
+                $.post("/update_read_state",{bookId:${book.bookId},memberId:${loginMember.memberId},state:state},function (data) {
                     if(data.code=="0"){
                         $("*[data-read-state]").removeClass("highlight");
                         $("*[data-read-state='"+ state+"']").addClass("highlight");
@@ -87,7 +87,7 @@
                 if(score==0||$.trim(content)==""){
                     return;
                 }
-                $.post("/insertComment",{bookId: ${book.bookId},memberId: ${checkLogin.memberId},score:score,content:content},function (data) {
+                $.post("/insertComment",{bookId: ${book.bookId},memberId: ${loginMember.memberId},score:score,content:content},function (data) {
                     if(data.code=="0"){
                         window.location.reload();
                     }
