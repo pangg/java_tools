@@ -54,4 +54,10 @@ public class BookServiceImpl implements BookService {
         return book;
     }
 
+    @Override
+    @Transactional
+    public void updateEvaluation() {
+        bookMapper.updateEvaluation();
+    }
+
 }

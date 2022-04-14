@@ -119,4 +119,6 @@
         </property>
     </bean>
 
+    <!--开启Springn Task定时任务的注解模式-->
+    <task:annotation-driven />
 </beans>
