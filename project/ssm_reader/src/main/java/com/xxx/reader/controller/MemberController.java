@@ -1,5 +1,6 @@
 package com.xxx.reader.controller;
 
+import com.xxx.reader.entity.Evaluation;
 import com.xxx.reader.entity.Member;
 import com.xxx.reader.exception.BussiException;
 import com.xxx.reader.service.MemberService;
@@ -90,5 +91,39 @@ public class MemberController {
             result.put("msg", e.getMsg());
         }
         return result;
+    }
+
+    @PostMapping("/evaluate")
+    @ResponseBody
+    public Map<String, Object> evaluate(Long memberId, Long bookId, Integer score, String content) {
+        Map<String, Object> ret = new HashMap<>();
+        try {
+            Evaluation evaluation = memberService.evaluate(memberId, bookId, score, content);
+            ret.put("code", "0");
+            ret.put("msg", "success");
+            ret.put("evaluation", evaluation);
+        } catch (BussiException e) {
+            e.printStackTrace();
+            ret.put("code", e.getCode());
+            ret.put("msg", e.getMsg());
+        }
+        return ret;
+    }
+
+    @PostMapping("/enjoy")
+    @ResponseBody
+    public Map<String, Object> enjoy(Long evaluationId) {
+        Map<String, Object> ret = new HashMap<>();
+        try {
+            Evaluation evaluation = memberService.enjoy(evaluationId);
+            ret.put("code", "0");
+            ret.put("msg", "success");
+            ret.put("evaluation", evaluation);
+        } catch (BussiException e) {
+            e.printStackTrace();
+            ret.put("code", e.getCode());
+            ret.put("msg", e.getMsg());
+        }
+        return ret;
     }
 }

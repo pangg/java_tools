@@ -87,7 +87,12 @@
                 if(score==0||$.trim(content)==""){
                     return;
                 }
-                $.post("/insertComment",{bookId: ${book.bookId},memberId: ${loginMember.memberId},score:score,content:content},function (data) {
+                $.post("/evaluate",{
+                    bookId: ${book.bookId},
+                    memberId: ${loginMember.memberId},
+                    score:score,
+                    content:content
+                },function (data) {
                     if(data.code=="0"){
                         window.location.reload();
                     }
@@ -97,7 +102,9 @@
             //更新点赞数据
             $("*[data-evaluation-id]").click(function () {
                 var evaluationId=$(this).data("evaluation-id");
-                $.post("/updateEnjoy",{evaluationId:evaluationId},function (data) {
+                $.post("/enjoy",{
+                    evaluationId:evaluationId
+                },function (data) {
                     if(data.code=="0"){
                         $("*[data-evaluation-id='"+ evaluationId +"'] span").text(data.evaluation.enjoy);
                     }

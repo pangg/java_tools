@@ -1,9 +1,11 @@
 package com.xxx.reader.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xxx.reader.entity.Evaluation;
 import com.xxx.reader.entity.Member;
 import com.xxx.reader.entity.MemberReadState;
 import com.xxx.reader.exception.BussiException;
+import com.xxx.reader.mapper.EvaluationMapper;
 import com.xxx.reader.mapper.MemberMapper;
 import com.xxx.reader.mapper.MemberReadStateMapper;
 import com.xxx.reader.md5.MD5Utils;
@@ -25,6 +27,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Resource
     private MemberReadStateMapper memberReadStateMapper;
+
+    @Resource
+    private EvaluationMapper evaluationMapper;
 
     @Transactional
     @Override
@@ -91,6 +96,28 @@ public class MemberServiceImpl implements MemberService {
             memberReadStateMapper.updateById(memberReadState);
         }
         return memberReadState;
+    }
+
+    @Override
+    public Evaluation evaluate(Long memberId, Long bookId, Integer score, String content) {
+        Evaluation evaluation = new Evaluation();
+        evaluation.setMemberId(memberId);
+        evaluation.setBookId(bookId);
+        evaluation.setScore(score);
+        evaluation.setContent(content);
+        evaluation.setCreateTime(new Date());
+        evaluation.setState("enable");
+        evaluation.setEnjoy(0);
+        evaluationMapper.insert(evaluation);
+        return evaluation;
+    }
+
+    @Override
+    public Evaluation enjoy(Long evaluationId) {
+        Evaluation evaluation = evaluationMapper.selectById(evaluationId);
+        evaluation.setEnjoy(evaluation.getEnjoy() + 1);
+        evaluationMapper.updateById(evaluation);
+        return evaluation;
     }
 
 
