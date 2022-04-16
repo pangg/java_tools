@@ -4,19 +4,32 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xxx.reader.entity.Book;
+import com.xxx.reader.entity.Evaluation;
+import com.xxx.reader.entity.MemberReadState;
 import com.xxx.reader.mapper.BookMapper;
+import com.xxx.reader.mapper.EvaluationMapper;
+import com.xxx.reader.mapper.MemberMapper;
+import com.xxx.reader.mapper.MemberReadStateMapper;
 import com.xxx.reader.service.BookService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @Service("bookService")
 @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 public class BookServiceImpl implements BookService {
     @Resource
     private BookMapper bookMapper;
+
+    @Resource
+    private MemberReadStateMapper memberReadStateMapper;
+
+    @Resource
+    private EvaluationMapper evaluationMapper;
 
     /**
      * 分页查询图书
@@ -60,4 +73,38 @@ public class BookServiceImpl implements BookService {
         bookMapper.updateEvaluation();
     }
 
+    @Override
+    @Transactional
+    public Book createBook(Book book) {
+        bookMapper.insert(book);
+        return book;
+    }
+
+    /**
+     * 更新图书
+     * @param book 新图书数据
+     * @return
+     */
+    @Override
+    @Transactional
+    public Book updateBook(Book book) {
+        bookMapper.updateById(book);
+        return book;
+    }
+
+    /**
+     * 删除图书及其相关数据
+     * @param bookId 图书编号
+     */
+    @Override
+    @Transactional
+    public void deleteBook(Long bookId) {
+        bookMapper.deleteById(bookId);
+        QueryWrapper<MemberReadState> mrsQueryWrapper = new QueryWrapper<>();
+        mrsQueryWrapper.eq("book_id", bookId);
+        memberReadStateMapper.delete(mrsQueryWrapper);
+        QueryWrapper<Evaluation> evaluationQueryWrapper = new QueryWrapper<>();
+        evaluationQueryWrapper.eq("book_id", bookId);
+        evaluationMapper.delete(evaluationQueryWrapper);
+    }
 }
