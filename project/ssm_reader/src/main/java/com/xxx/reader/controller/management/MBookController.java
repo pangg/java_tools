@@ -31,7 +31,7 @@ public class MBookController {
         return new ModelAndView("/management/book");
     }
 
-    @GetMapping("/upload")
+    @PostMapping("/upload")
     @ResponseBody
     public Map<String, Object> upload(@RequestParam("img")MultipartFile file, HttpServletRequest request) throws IOException {
         // 上传目录
@@ -83,7 +83,7 @@ public class MBookController {
         Map<String, Object> ret = new HashMap<String, Object>();
         ret.put("code", "0");
         ret.put("msg", "success");
-        ret.put("date", pageObject.getRecords());
+        ret.put("data", pageObject.getRecords());
         ret.put("count", pageObject.getTotal());
         return ret;
     }
