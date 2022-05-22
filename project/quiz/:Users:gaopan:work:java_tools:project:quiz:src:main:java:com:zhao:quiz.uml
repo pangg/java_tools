@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/gaopan/work/java_tools/project/quiz/src/main/java/com/zhao/quiz</OriginalElement>
+  <nodes>
+    <node x="-21.164590712635572" y="2706.208331708428">com.zhao.quiz.domain.Teacher</node>
+    <node x="899.0" y="0.0">com.zhao.quiz.service.QuestionService</node>
+    <node x="677.8354092873644" y="3518.4562176392074">com.zhao.quiz.controller.StudentController</node>
+    <node x="-1.0" y="1138.9377213790642">com.zhao.quiz.service.impl.TeacherServiceImpl</node>
+    <node x="979.3752967969908" y="1950.827994237307">com.zhao.quiz.domain.Record</node>
+    <node x="352.0" y="400.0">com.zhao.quiz.service.impl.PaperServiceImpl</node>
+    <node x="353.0" y="1138.9377213790642">com.zhao.quiz.service.impl.ClasseServiceImpl</node>
+    <node x="899.0" y="367.0">com.zhao.quiz.service.impl.QuestionServiceImpl</node>
+    <node x="-21.164590712635572" y="3263.373588995614">com.zhao.quiz.mapper.TeacherMapper</node>
+    <node x="598.8354092873644" y="3730.5388462828005">com.zhao.quiz.config.DruidConfig</node>
+    <node x="-1.0" y="2331.963299401989">com.zhao.quiz.controller.LoginController</node>
+    <node x="332.8354092873644" y="3263.373588995614">com.zhao.quiz.mapper.ClasseMapper</node>
+    <node x="352.0" y="0.0">com.zhao.quiz.service.PaperService</node>
+    <node x="662.0" y="880.9377213790642">com.zhao.quiz.service.StudentService</node>
+    <node x="976.5" y="880.9377213790642">com.zhao.quiz.mapper.RecordMapper</node>
+    <node x="1445.8354092873644" y="3028.290960352021">com.zhao.quiz.domain.AjaxResult</node>
+    <node x="641.8354092873644" y="3263.373588995614">com.zhao.quiz.domain.PapIdQuesCourse</node>
+    <node x="231.83540928736443" y="3006.290960352021">com.zhao.quiz.mapper.ExamMapper</node>
+    <node x="2.375296796990824" y="1950.827994237307">com.zhao.quiz.controller.PaperController</node>
+    <node x="1143.8354092873644" y="3028.290960352021">com.zhao.quiz.mapper.StudentMapper</node>
+    <node x="-26.164590712635572" y="3730.5388462828005">com.zhao.quiz.component.LoginHanderInterceptor</node>
+    <node x="1013.8354092873644" y="2706.208331708428">com.zhao.quiz.domain.Exam</node>
+    <node x="953.8354092873644" y="3263.373588995614">com.zhao.quiz.controller.QuestionController</node>
+    <node x="-21.164590712635572" y="3006.290960352021">com.zhao.quiz.domain.Paper</node>
+    <node x="402.0" y="2331.963299401989">com.zhao.quiz.domain.QuestionPaper</node>
+    <node x="353.0" y="880.9377213790642">com.zhao.quiz.service.ClasseService</node>
+    <node x="825.8354092873644" y="3028.290960352021">com.zhao.quiz.controller.ClasseController</node>
+    <node x="375.8354092873644" y="3898.6214749263936">com.zhao.quiz.QuizApplication</node>
+    <node x="774.0" y="2331.963299401989">com.zhao.quiz.domain.ClaAcc</node>
+    <node x="472.3752967969908" y="1950.827994237307">com.zhao.quiz.mapper.QuestionMapper</node>
+    <node x="332.8354092873644" y="3518.4562176392074">com.zhao.quiz.controller.RecordController</node>
+    <node x="0.0" y="411.0">com.zhao.quiz.service.impl.RecordServiceImpl</node>
+    <node x="231.83540928736443" y="2706.208331708428">com.zhao.quiz.controller.ExamController</node>
+    <node x="-1.0" y="880.9377213790642">com.zhao.quiz.service.TeacherService</node>
+    <node x="269.0" y="1436.1359717392324">com.zhao.quiz.domain.Question</node>
+    <node x="-21.164590712635572" y="3898.6214749263936">com.zhao.quiz.config.WebMvcConfig</node>
+    <node x="572.8354092873644" y="3006.290960352021">com.zhao.quiz.domain.Classe</node>
+    <node x="684.8354092873644" y="2706.208331708428">com.zhao.quiz.domain.RecordExam</node>
+    <node x="-1.0" y="1436.1359717392324">com.zhao.quiz.service.ExamService</node>
+    <node x="814.0" y="1436.1359717392324">com.zhao.quiz.mapper.PaperMapper</node>
+    <node x="-21.164590712635572" y="3518.4562176392074">com.zhao.quiz.controller.TeacherController</node>
+    <node x="-1.0" y="1672.1359717392324">com.zhao.quiz.service.impl.ExamServiceImpl</node>
+    <node x="1009.8354092873644" y="3518.4562176392074">com.zhao.quiz.domain.Toscore</node>
+    <node x="0.0" y="0.0">com.zhao.quiz.service.RecordService</node>
+    <node x="1108.0" y="2331.9632994019885">com.zhao.quiz.domain.Student</node>
+    <node x="662.0" y="1116.9377213790642">com.zhao.quiz.service.impl.StudentServiceImpl</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.zhao.quiz.service.impl.TeacherServiceImpl" target="com.zhao.quiz.service.TeacherService" relationship="REALIZATION">
+      <point x="0.0" y="-115.5" />
+      <point x="0.0" y="104.0" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.PaperServiceImpl" target="com.zhao.quiz.service.PaperService" relationship="REALIZATION">
+      <point x="0.0" y="-181.5" />
+      <point x="0.0" y="175.0" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.QuestionServiceImpl" target="com.zhao.quiz.service.QuestionService" relationship="REALIZATION">
+      <point x="0.0" y="-170.0" />
+      <point x="0.0" y="158.5" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.RecordServiceImpl" target="com.zhao.quiz.service.RecordService" relationship="REALIZATION">
+      <point x="0.0" y="-192.0" />
+      <point x="0.0" y="180.5" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.ExamServiceImpl" target="com.zhao.quiz.service.ExamService" relationship="REALIZATION">
+      <point x="0.0" y="-104.5" />
+      <point x="0.0" y="93.0" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.ClasseServiceImpl" target="com.zhao.quiz.service.ClasseService" relationship="REALIZATION">
+      <point x="0.0" y="-115.5" />
+      <point x="0.0" y="104.0" />
+    </edge>
+    <edge source="com.zhao.quiz.service.impl.StudentServiceImpl" target="com.zhao.quiz.service.StudentService" relationship="REALIZATION">
+      <point x="0.0" y="-104.5" />
+      <point x="0.0" y="93.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.2834923708880389" showDependencies="false" x="1159.0282443211274" y="2505.988877424914" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

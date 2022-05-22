@@ -461,7 +461,7 @@ CREATE TABLE `student`  (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES (1, '舒照', '2020001', 1, '1258104016@qq.com', '123456', 1);
+INSERT INTO `student` VALUES (1, '高攀', '2020001', 1, '1258104016@qq.com', '123456', 1);
 INSERT INTO `student` VALUES (2, '刘得滑', '2020002', 1, 'liudehua@qq.com', '123456', 2);
 INSERT INTO `student` VALUES (3, '秦岚', 'ql1234', 1, 'ql@qq.com', '123456', 13);
 INSERT INTO `student` VALUES (5, '黄霖', 'hl11', 0, 'hl@qq.com', '123456', 4);
