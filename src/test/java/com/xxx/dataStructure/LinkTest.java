@@ -33,4 +33,17 @@ public class LinkTest {
 
         System.out.println("链表长度："+link.getLength()); //2
     }
+
+    @Test
+    public void testLinkReverse() {
+        Link link = new Link();
+        link.add(0,1); //1
+        link.add(1,2); //1->2
+        link.add(2,3); //1->2->3
+        link.add(3,4); //1->2->3->4
+        link.add(4,5); //1->2->3->4->5
+        link.printLink();//1->2->3->4->5
+        link.linkReverse();
+        link.printLink();//5->4->3->2->1
+    }
 }

@@ -94,7 +94,7 @@ public class Link {
      * @param element 值
      */
     public void add(int index, int element) {
-        if (index < size) {
+        if (index <= size) {
             if (size == 0) {  // 空链表
                 oneNode(element);
                 size ++;
@@ -168,6 +168,23 @@ public class Link {
                 size --;
             }
         }
+    }
+
+    /**
+     * 指针反转实现链表反转
+     */
+    public void linkReverse() {
+        Node temp = first;
+        last = temp;
+        Node next = first.getNext();
+        for (int i = 0; i < size - 1; i++) {
+            Node nextNext = next.getNext(); // 获取当前元素的下下个元素
+            next.setNext(temp);
+            temp = next;
+            next = nextNext;
+        }
+        last.setNext(null);
+        first = temp;
     }
 
     /**
