@@ -73,6 +73,9 @@ public class RecordController {
             int allScore=0;
             int accScore=0;
             for(Classe cla:clas){
+                if (cla == null) {
+                    continue;
+                }
                 int claId=cla.getClasseId();
                 //班级信息
                 Classe claName=classeService.queryClaNameById(claId);
