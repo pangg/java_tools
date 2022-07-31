@@ -41,4 +41,10 @@ public class MySortTest {
         int[] a = {5,1,12,3,125,50,66};
         MySort.fastSort(a);
     }
+
+    @Test
+    public void test() {
+        double g = 10 / 3;
+        System.out.printf("%.2f", g);
+    }
 }
