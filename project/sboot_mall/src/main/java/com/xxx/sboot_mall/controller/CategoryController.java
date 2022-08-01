@@ -3,11 +3,14 @@ package com.xxx.sboot_mall.controller;
 import com.xxx.sboot_mall.common.ApiRestResponse;
 import com.xxx.sboot_mall.common.Constant;
 import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
+import com.xxx.sboot_mall.model.pojo.Category;
 import com.xxx.sboot_mall.model.pojo.User;
 import com.xxx.sboot_mall.model.request.AddCategoryRequest;
+import com.xxx.sboot_mall.model.request.UpdateCategoryReq;
 import com.xxx.sboot_mall.service.CategoryService;
 import com.xxx.sboot_mall.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +45,33 @@ public class CategoryController {
         } else {
             return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_ADMIN);
         }
+    }
 
+    @ApiOperation("后台更新目录")
+    @PostMapping("/admin/category/update")
+    @ResponseBody
+    public ApiRestResponse updateCategory(HttpSession session, @Valid @RequestBody UpdateCategoryReq updateCategoryReq) {
+        System.out.println(updateCategoryReq);
+        User currentUser = (User) session.getAttribute(Constant.IMOOC_MALL_USER);
+        if (currentUser == null) {
+            return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_LOGIN);
+        }
+        // 校验管理员
+        boolean adminRole = userService.checkAdminRole(currentUser);
+        if (adminRole) {
+            Category category = new Category();
+            BeanUtils.copyProperties(updateCategoryReq, category);
+            categoryService.update(category);
+            return ApiRestResponse.success();
+        } else {
+            return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_ADMIN);
+        }
+    }
+
+    @ApiOperation("后台删除目录")
+    @PostMapping("/admin/category/delete")
+    @ResponseBody
+    public ApiRestResponse deleteCategory() {
+        return null;
     }
 }
