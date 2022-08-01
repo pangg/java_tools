@@ -6,6 +6,7 @@ import com.xxx.sboot_mall.exception.ImoocMallException;
 import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
 import com.xxx.sboot_mall.model.pojo.User;
 import com.xxx.sboot_mall.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class UserController {
         return userService.getUser();
     }
 
+    @ApiOperation("用户注册")
     @PostMapping("/register")
     @ResponseBody
     public ApiRestResponse register(@RequestParam("userName") String userName, @RequestParam("password") String password) throws ImoocMallException {
@@ -46,6 +48,7 @@ public class UserController {
         return ApiRestResponse.success();
     }
 
+    @ApiOperation("用户登陆")
     @PostMapping("/login")
     @ResponseBody
     public ApiRestResponse login(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpSession session) throws ImoocMallException {
@@ -62,6 +65,7 @@ public class UserController {
         return ApiRestResponse.success(user);
     }
 
+    @ApiOperation("用户更新签名")
     @PostMapping("/user/update")
     @ResponseBody
     public ApiRestResponse updateUserInfo(HttpSession session, @RequestParam String signature) throws ImoocMallException {
@@ -76,6 +80,7 @@ public class UserController {
         return ApiRestResponse.success();
     }
 
+    @ApiOperation("退出登陆")
     @PostMapping("/user/logout")
     @ResponseBody
     public ApiRestResponse logout(HttpSession session) {

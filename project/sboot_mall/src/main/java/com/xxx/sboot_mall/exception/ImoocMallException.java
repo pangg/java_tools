@@ -1,6 +1,6 @@
 package com.xxx.sboot_mall.exception;
 
-public class ImoocMallException extends Exception {
+public class ImoocMallException extends RuntimeException {
     private final Integer code;
     private final String message;
 
