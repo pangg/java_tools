@@ -1,5 +1,7 @@
 package com.xxx.sboot_mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxx.sboot_mall.exception.ImoocMallException;
 import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
 import com.xxx.sboot_mall.model.dao.CategoryMapper;
@@ -9,6 +11,8 @@ import com.xxx.sboot_mall.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -41,5 +45,26 @@ public class CategoryServiceImpl implements CategoryService {
         if (count == 0) {
             throw new ImoocMallException(ImoocMallExceptionEnum.UPDATE_FAILED);
         }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Category categoryOld = categoryMapper.selectByPrimaryKey(id);
+        if (categoryOld == null) {
+            throw new ImoocMallException(ImoocMallExceptionEnum.DELETE_FAILED);
+        }
+
+        int count = categoryMapper.deleteByPrimaryKey(id);
+        if (count == 0) {
+            throw new ImoocMallException(ImoocMallExceptionEnum.DELETE_FAILED);
+        }
+    }
+
+    @Override
+    public PageInfo<Category> listForAdmin(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize, "type, order_num");
+        List<Category> categoryList = categoryMapper.selectList();
+        PageInfo<Category> pageInfo = new PageInfo<>(categoryList);
+        return pageInfo;
     }
 }
