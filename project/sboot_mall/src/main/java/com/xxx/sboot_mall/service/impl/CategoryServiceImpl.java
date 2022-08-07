@@ -7,11 +7,15 @@ import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
 import com.xxx.sboot_mall.model.dao.CategoryMapper;
 import com.xxx.sboot_mall.model.pojo.Category;
 import com.xxx.sboot_mall.model.request.AddCategoryRequest;
+import com.xxx.sboot_mall.model.vo.CategoryVo;
 import com.xxx.sboot_mall.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import springfox.documentation.annotations.Cacheable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,5 +70,28 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categoryList = categoryMapper.selectList();
         PageInfo<Category> pageInfo = new PageInfo<>(categoryList);
         return pageInfo;
+    }
+
+    @Override
+    // redis 缓存
+    @Cacheable(value = "listCategoryForCustomer")
+    public List<CategoryVo> listCategoryForCustomer() {
+        ArrayList<CategoryVo> categoryVos = new ArrayList<>();
+        recursivelyFindCategories(categoryVos, 0);
+        return categoryVos;
+    }
+
+    private void recursivelyFindCategories(List<CategoryVo> categoryVoList, Integer parentId) {
+        // 递归获取所有子类别，并组合成一个目录树
+        List<Category> categoryList = categoryMapper.selectCategoriesByParentId(parentId);
+        if (!CollectionUtils.isEmpty(categoryList)) {
+            for (int i = 0; i < categoryList.size(); i++) {
+                Category category = categoryList.get(i);
+                CategoryVo categoryVo = new CategoryVo();
+                BeanUtils.copyProperties(category, categoryVo);
+                categoryVoList.add(categoryVo);
+                recursivelyFindCategories(categoryVo.getChildCategory(), categoryVo.getId());
+            }
+        }
     }
 }

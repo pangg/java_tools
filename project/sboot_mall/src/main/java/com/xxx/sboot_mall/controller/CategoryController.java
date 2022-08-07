@@ -8,6 +8,7 @@ import com.xxx.sboot_mall.model.pojo.Category;
 import com.xxx.sboot_mall.model.pojo.User;
 import com.xxx.sboot_mall.model.request.AddCategoryRequest;
 import com.xxx.sboot_mall.model.request.UpdateCategoryReq;
+import com.xxx.sboot_mall.model.vo.CategoryVo;
 import com.xxx.sboot_mall.service.CategoryService;
 import com.xxx.sboot_mall.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class CategoryController {
@@ -84,5 +86,13 @@ public class CategoryController {
     public ApiRestResponse listCategoryForAdmin(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
         PageInfo<Category> pageInfo = categoryService.listForAdmin(pageNum, pageSize);
         return ApiRestResponse.success(pageInfo);
+    }
+
+    @ApiOperation("前台目录列表")
+    @PostMapping("/category/list")
+    @ResponseBody
+    public ApiRestResponse listCategoryForCustomer() {
+        List<CategoryVo> categoryVos = categoryService.listCategoryForCustomer();
+        return ApiRestResponse.success(categoryVos);
     }
 }
