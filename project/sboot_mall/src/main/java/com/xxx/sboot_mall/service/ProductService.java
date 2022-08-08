@@ -1,5 +1,6 @@
 package com.xxx.sboot_mall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.xxx.sboot_mall.model.pojo.Product;
 import com.xxx.sboot_mall.model.request.AddProductReq;
 
@@ -14,4 +15,8 @@ public interface ProductService {
     void delete(Integer id);
 
     void batchUpdateSellStatus(Integer[] ids, Integer sellStatus);
+
+    PageInfo<Product> listForAdmin(Integer pageNum, Integer pageSize);
+
+    Product detail(Integer id);
 }

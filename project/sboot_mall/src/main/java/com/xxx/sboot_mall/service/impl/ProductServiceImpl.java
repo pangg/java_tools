@@ -1,5 +1,7 @@
 package com.xxx.sboot_mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxx.sboot_mall.exception.ImoocMallException;
 import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
 import com.xxx.sboot_mall.model.dao.ProductMapper;
@@ -9,6 +11,8 @@ import com.xxx.sboot_mall.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 商品服务实现
@@ -62,5 +66,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void batchUpdateSellStatus(Integer[] ids, Integer sellStatus) {
         productMapper.batchUpdateSellStatus(ids, sellStatus);
+    }
+
+    @Override
+    public PageInfo<Product> listForAdmin(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> products = productMapper.selectListForAdmin();
+        PageInfo<Product> pageInfo = new PageInfo<>(products);
+        return pageInfo;
+    }
+
+    @Override
+    public Product detail(Integer id) {
+        Product product = productMapper.selectByPrimaryKey(id);
+        return product;
     }
 }

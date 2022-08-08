@@ -1,5 +1,6 @@
 package com.xxx.sboot_mall.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xxx.sboot_mall.common.ApiRestResponse;
 import com.xxx.sboot_mall.common.Constant;
 import com.xxx.sboot_mall.exception.ImoocMallException;
@@ -92,6 +93,13 @@ public class ProductAdminController {
     public ApiRestResponse batchUpdateSellStatus(@RequestParam Integer[] ids, @RequestParam Integer sellStatus) {
         productService.batchUpdateSellStatus(ids, sellStatus);
         return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台商品列表接口")
+    @PostMapping("/admin/product/list")
+    public ApiRestResponse list(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        PageInfo<Product> pageInfo = productService.listForAdmin(pageNum, pageSize);
+        return ApiRestResponse.success(pageInfo);
     }
 
     private URI getHost(URI uri) {
