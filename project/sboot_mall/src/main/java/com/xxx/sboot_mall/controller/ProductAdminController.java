@@ -4,8 +4,13 @@ import com.xxx.sboot_mall.common.ApiRestResponse;
 import com.xxx.sboot_mall.common.Constant;
 import com.xxx.sboot_mall.exception.ImoocMallException;
 import com.xxx.sboot_mall.exception.ImoocMallExceptionEnum;
+import com.xxx.sboot_mall.model.pojo.Product;
 import com.xxx.sboot_mall.model.request.AddProductReq;
+import com.xxx.sboot_mall.model.request.UpdateCategoryReq;
+import com.xxx.sboot_mall.model.request.UpdateProductReq;
 import com.xxx.sboot_mall.service.ProductService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +42,7 @@ public class ProductAdminController {
      * @param file
      * @return
      */
+    @ApiOperation("上传文件接口")
     @PostMapping("/admin/upload/file")
     public ApiRestResponse upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) {
         String fileName = file.getOriginalFilename();
@@ -63,6 +69,29 @@ public class ProductAdminController {
         } catch (URISyntaxException e) {
             throw new ImoocMallException(ImoocMallExceptionEnum.UPLOAD_FAILED);
         }
+    }
+
+    @ApiOperation("后台更新拍品信息")
+    @PostMapping("/admin/product/update")
+    public ApiRestResponse updateProduct(@Valid @RequestBody UpdateProductReq updateProductReq) {
+        Product product = new Product();
+        BeanUtils.copyProperties(updateProductReq, product);
+        productService.update(product);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台删除商品")
+    @PostMapping("/admin/product/delete")
+    public ApiRestResponse deleteProduct(@RequestParam Integer id) {
+        productService.delete(id);
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("后台批量上下架接口")
+    @PostMapping("/admin/product/batchUpdateSellStatus")
+    public ApiRestResponse batchUpdateSellStatus(@RequestParam Integer[] ids, @RequestParam Integer sellStatus) {
+        productService.batchUpdateSellStatus(ids, sellStatus);
+        return ApiRestResponse.success();
     }
 
     private URI getHost(URI uri) {

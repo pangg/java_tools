@@ -156,4 +156,13 @@
     from imooc_mall_product
     where name = #{name, jdbcType = VARCHAR}
   </select>
+
+  <update id="batchUpdateSellStatus" >
+    update imooc_mall_product
+    set status = #{sellStatus}
+    where id in
+    <foreach collection="ids" separator="," open="(" close=")" item="id">
+      #{id}
+    </foreach>
+  </update>
 </mapper>
