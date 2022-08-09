@@ -75,9 +75,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     // redis 缓存
     @Cacheable(value = "listCategoryForCustomer")
-    public List<CategoryVo> listCategoryForCustomer() {
+    public List<CategoryVo> listCategoryForCustomer(Integer parentId) {
         ArrayList<CategoryVo> categoryVos = new ArrayList<>();
-        recursivelyFindCategories(categoryVos, 0);
+        recursivelyFindCategories(categoryVos, parentId);
         return categoryVos;
     }
 

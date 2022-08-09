@@ -3,6 +3,7 @@ package com.xxx.sboot_mall.service;
 import com.github.pagehelper.PageInfo;
 import com.xxx.sboot_mall.model.pojo.Product;
 import com.xxx.sboot_mall.model.request.AddProductReq;
+import com.xxx.sboot_mall.model.request.ProductListReq;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface ProductService {
     PageInfo<Product> listForAdmin(Integer pageNum, Integer pageSize);
 
     Product detail(Integer id);
+
+    PageInfo<Product> list(ProductListReq productListReq);
 }
