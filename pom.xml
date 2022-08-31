@@ -34,7 +34,7 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <!--只参与Maven Test，不进行发布-->
-            <scope>test</scope>
+            <!--<scope>test</scope>-->
         </dependency>
 
         <!--mybatis-->
