@@ -212,6 +212,22 @@
             <version>2.5</version>
         </dependency>
 
+        <!-- Spring提供的计时器StopWatch对于秒、毫秒为单位方便计时的程序，尤其是单线程、顺序执行程序的时间特性的统计输出支持比较好。 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.2.9.RELEASE</version>
+        </dependency>
+
+        <!--Apache 提供的StopWatch-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <build>
