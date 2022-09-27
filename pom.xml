@@ -245,6 +245,12 @@
             <version>3.17</version>
         </dependency>
 
+        <!--Apache Tika是基于java的内容检测和分析的工具包，可检测并提取来自上千种不同文件类型（如PPT，XLS和PDF）中的元数据和结构化文本-->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-parsers</artifactId>
+            <version>1.17</version>
+        </dependency>
 
 
     </dependencies>
