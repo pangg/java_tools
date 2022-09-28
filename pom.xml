@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+
+        <itext7.version>7.1.7</itext7.version>
+        <itext7.html2pdf.version>2.1.4</itext7.html2pdf.version>
     </properties>
 
     <!-- 镜像仓库使用阿里云 -->
@@ -250,6 +253,39 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers</artifactId>
             <version>1.17</version>
+        </dependency>
+
+        <!-- iText 7是iText强大的PDF工具包的最新版本，用于PDF生成，PDF编程，处理和操作，如数字签名等。 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>kernel</artifactId>
+            <version>${itext7.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
+            <version>${itext7.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>layout</artifactId>
+            <version>${itext7.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>forms</artifactId>
+            <version>${itext7.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>pdfa</artifactId>
+            <version>${itext7.version}</version>
+        </dependency>
+        <!-- itextpdf html2pdf组件-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>html2pdf</artifactId>
+            <version>${itext7.html2pdf.version}</version>
         </dependency>
 
 
