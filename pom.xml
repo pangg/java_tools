@@ -307,6 +307,13 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!--Java操作 mongodb -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
 
     </dependencies>
 
