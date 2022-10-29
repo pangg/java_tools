@@ -15,6 +15,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
+ * @See https://juejin.cn/post/7114228631735861261
  * Kafka消息延时实现思路
  *      生产者将生产消息存入topic_delay主题中进行存储。
  *      将topic_delay主题中的所有消息拉取至ConcurrentLinkedQueue队列中。
