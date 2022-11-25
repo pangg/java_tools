@@ -354,4 +354,50 @@ public class ArrayDemo {
                 + Arrays.equals(ary, ary2));
     }
 
+    @Test
+    public void test() {
+        Person p1=new Person("张三",24);
+        Person p2 = null;
+        try{
+            p2 =(Person) p1.clone();
+        }catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(p1.getName()+ ":" +p2.getName());
+        System.out.println(p1.getAge()+ ":" +p2.getAge());
+        p2.setName("李四");
+        p2.setAge(12);
+        System.out.println(p1.getName()+ ":" + p2.getName());
+        System.out.println(p1.getAge()+ ":" +p2.getAge());
+
+    }
+
+}
+
+class Person implements Cloneable{
+    private String name;
+    private int age;
+    public Person(String name,int age){
+        this.name=name;
+        this.age=age;
+    }
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name=name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public Object clone()throws CloneNotSupportedException{
+        return super.clone();//浅拷贝
+    }
 }
