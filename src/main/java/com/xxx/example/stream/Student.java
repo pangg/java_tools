@@ -15,6 +15,11 @@ public class Student {
         this.stature = stature;
     }
 
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public Student(String name, int age, int stature, SpecialityEnum specialities) {
         this.name = name;
         this.age = age;

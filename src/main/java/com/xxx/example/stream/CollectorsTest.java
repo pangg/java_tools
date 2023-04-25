@@ -3,6 +3,7 @@ package com.xxx.example.stream;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -69,6 +70,94 @@ public class CollectorsTest {
 
         String names = students.stream().map(Student::getName).collect(Collectors.joining(",", "[", "]"));
         System.out.println(names);
+    }
+
+    @Test
+    public void test() {
+
+        List<Student> students = Arrays.asList(
+                new Student("Alice", 18),
+                new Student("Bob", 20),
+                new Student("Charlie", 18)
+        );
+        Set<String> names = students.stream()
+                .collect(Collectors.mapping(Student::getName, Collectors.toSet()));
+
+        Set<String> names2 = students.stream().map(Student::getName)
+                .collect(Collectors.toSet());
+
+        List<String> l1 = students.stream().map(Student::getName)
+                .sorted(Comparator.comparing(String::toString)).collect(Collectors.toList());
+        System.out.println(l1);
+
+
+        /*List<Student> students = Arrays.asList(
+                new Student("Alice", 18),
+                new Student("Bob", 20),
+                new Student("Charlie", 18)
+        );
+        Map<Integer, List<Student>> map = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge));
+        Map<Integer, Long> map2 = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.counting()));
+        Map<Integer, Double> map3 = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.averagingInt(Student::getAge)));
+        Map<Integer, List<Integer>> map4 = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.mapping(Student::getAge, Collectors.toList())));
+        Map<Integer, List<Student>> map5 = students.stream()
+                .collect(Collectors.groupingBy(Student::getAge, Collectors.collectingAndThen(Collectors.toList(),
+                        list -> list.stream().sorted(Comparator.comparing(Student::getName)).collect(Collectors.toList()))));
+
+        System.out.println(map5);*/
+
+        /*Map<Boolean, List<String>> map = Stream.of("a", "bb", "ccc")
+                .collect(Collectors.partitioningBy(x -> x.length() > 1));
+        System.out.println(map);*/
+
+        /*Map<Integer, List<String>> map = Stream.of("a", "b", "c")
+                .collect(Collectors.groupingBy(String::length));
+        System.out.println(map);*/
+
+        /*Optional<Integer> max = Stream.of(1, 2, 3)
+                .collect(Collectors.maxBy(Comparator.naturalOrder()));
+        System.out.println(max);*/
+
+
+        /*int sum = Stream.of(1, 2, 3)
+                .collect(Collectors.summingInt(x -> x));
+        System.out.println(sum);*/
+
+        /*double avg = Stream.of(1, 2, 3)
+                .collect(Collectors.averagingInt(x -> x));
+        System.out.println(avg);*/
+
+        /*long count = Stream.of("a", "b", "c")
+                .collect(Collectors.counting());
+        System.out.println(count);*/
+
+        /*String str = Stream.of("a", "b", "c")
+                .collect(Collectors.joining(",", "[", "]"));
+        System.out.println(str);*/
+
+        /*List<Integer> list1 = Arrays.asList(1, 2, 3);
+        List<Integer> list2 = list1.stream()
+                .map(i -> i + 1)
+                //.map(Function.identity())
+                .collect(Collectors.toList());
+        System.out.println(list1);
+        System.out.println(list2);*/
+
+        /*Map<String, Integer> map = Stream.of("a", "b", "c")
+                .collect(Collectors.toMap(Function.identity(), String::length));
+        System.out.println(map);*/
+
+        /*Set<String> set = Stream.of("a", "b", "c")
+                .collect(Collectors.toSet());
+        System.out.println(set);*/
+
+        /*List<String> list = Stream.of("a", "b", "c")
+                .collect(Collectors.toList());
+        System.out.println(list);*/
     }
 
     /**
