@@ -14,12 +14,13 @@ public class ReentrantLockDemo {
 
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < 1000; i++) {
-            executorService.execute(() -> counter.increment());
+            executorService.execute(counter::increment);
         }
         executorService.shutdown();
 
         try {
-            executorService.awaitTermination(10, TimeUnit.SECONDS);
+            boolean b = executorService.awaitTermination(10, TimeUnit.SECONDS);
+            System.out.println(b);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
